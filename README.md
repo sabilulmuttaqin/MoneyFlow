@@ -20,9 +20,9 @@ F. Low Fidelity : \LowFidelity
 
 G. Tabel Pembagian Tugas (Backlog)
 
-|-----------------------------------------------------------------------------|
-| Nama Website : MoneyFlow                                                    |
-|-----------------------------------------------------------------------------|
+| Nama Website : MoneyFlow |
+|--------------------------|
+
 | Agile Organization | Catat Cepat | Kategori | Tabungan | Ringkasan Bulanan  |
 |--------------------|-------------|----------|----------|--------------------|
 | Product Owner      | Sabilul     | Shelvi   | Fawwaz   | Reza               |
@@ -30,4 +30,3 @@ G. Tabel Pembagian Tugas (Backlog)
 | Tim Pengembangan   | Fawwaz      | Reza     | Sabilul  | Shelvi             |
 |                    | Reza        | Sabilul  | Shelvi   | Fawwaz             |
 |                    | Sabilul     | Shelvi   | Fawwaz   | Reza               |
-|-----------------------------------------------------------------------------|
