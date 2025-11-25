@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AnggaranController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,3 +23,6 @@ Route::get('/kategori', function () {
 Route::get('/dashboard', function () {
     return view('featureview.home.home');
 })->middleware('auth')->name('dashboard');
+
+// Menambahkan route anggaran di sini, dengan middleware auth
+Route::resource('anggaran', AnggaranController::class)->middleware('auth');
