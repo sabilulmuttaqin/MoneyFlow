@@ -4,21 +4,32 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAnggaransTable extends Migration
+class CreateUsersTable extends Migration
 {
-    public function up(): void
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
     {
-        Schema::create('anggarans', function (Blueprint $table) {
-            $table->id();
-            $table->string('kategori');  // Kebutuhan Pokok, Keinginan, Tabungan
-            $table->decimal('prosentase', 5, 2);  // Misal: 50.00
-            $table->decimal('nominal', 15, 2)->default(0);  // Uang yang dialokasikan
-            $table->timestamps();
+        Schema::create('users', function (Blueprint $table) {
+            $table->id(); // Kolom ID
+            $table->string('name'); // Nama pengguna
+            $table->string('email')->unique(); // Email pengguna, unik
+            $table->string('password'); // Password pengguna
+            $table->rememberToken(); // Kolom untuk "remember me"
+            $table->timestamps(); // Timestamps (created_at, updated_at)
         });
     }
 
-    public function down(): void
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
     {
-        Schema::dropIfExists('anggarans');
+        Schema::dropIfExists('users');
     }
 }
