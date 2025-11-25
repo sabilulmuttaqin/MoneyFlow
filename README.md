@@ -7,10 +7,10 @@ Dengan antarmuka yang rapi dan fokus pada kemudahan penggunaan, Money Flow membe
 
 C. Kelas - NIM - Nama
 
-1. Rekayasa Interaksi C - Shelvi Dwi Wijayati - 202210370311369
-2. Rekayasa Interaksi C - Fawwaz Nafi Mubarok - 202210370311371
-3. Rekayasa Interaksi C - Sabilul Muttaqin - 202210370311393
-4. Rekayasa Interaksi C - Juvenda Reza Nugraha - 202210370311396
+1. Rekayasa Interaksi B - Shelvi Dwi Wijayati - 202210370311369
+2. Rekayasa Interaksi B - Fawwaz Nafi Mubarok - 202210370311371
+3. Rekayasa Interaksi B - Sabilul Muttaqin - 202210370311393
+4. Rekayasa Interaksi B - Juvenda Reza Nugraha - 202210370311396
 
 D. Link Figma
 https://www.figma.com/design/hYM8Veb9ZbRWR6EN4N8NKO/Rekayasa-Interaksi?node-id=0-1&t=vxKiD1md0ltCg3sT-1

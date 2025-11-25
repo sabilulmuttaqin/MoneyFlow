@@ -4,11 +4,18 @@
     padding: 0;
     box-sizing: border-box;
 }
+@font-face {
+    font-family: "Aspekta";
+    src: url("/fonts/Aspekta-450.ttf") format("truetype");
+    font-weight: 450;
+    font-style: normal;
+}
 
-html, body {
+html,
+body {
     height: 100%;
     overflow: hidden; /* Biar tidak scroll */
-    font-family: "Poppins", sans-serif;
+    font-family: "Aspekta", sans-serif;
 }
 
 /* === Container Utama === */
