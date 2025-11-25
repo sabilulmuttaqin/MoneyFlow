@@ -16,9 +16,9 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/kategori', function () {
-    return view('featureview.kategori');
+    return view('featureview.kategori.kategori');
 })->middleware('auth')->name('kategori');
 
 Route::get('/dashboard', function () {
-    return view('featureview.home');
+    return view('featureview.home.home');
 })->middleware('auth')->name('dashboard');
