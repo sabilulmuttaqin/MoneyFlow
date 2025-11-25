@@ -9,7 +9,7 @@ class AnggaranController extends Controller
 {
     public function index()
     {
-        $anggarans = Anggaran::all();  // Ambil semua data anggaran
+        $anggarans = Anggaran::all();  // Ambil seluruh data anggaran
         return view('anggaran.index', compact('anggarans'));
     }
 
