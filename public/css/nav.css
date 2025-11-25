@@ -1,0 +1,166 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* FONT CUSTOM */
+@font-face {
+    font-family: "Aspekta";
+    src: url("/fonts/Aspekta-450.ttf") format("truetype");
+    font-weight: 450;
+    font-style: normal;
+}
+
+/* GLOBAL BASE */
+body {
+    font-family: "Aspekta", sans-serif;
+    background: #f7f8fa;
+    color: #111827;
+}
+
+/* LAYOUT WRAPPER */
+.layout {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 20%;
+    min-width: 260px;
+    max-width: 300px;
+    background: #ffffff;
+    border-right: 1px solid #e8e9ed;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.03);
+    z-index: 1000;
+}
+
+/* LOGO SECTION */
+.logo-section {
+    padding: 18px 20px;
+    border-bottom: 1px solid #f0f1f3;
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* MENU LABEL */
+.menu-label {
+    padding: 20px 20px 12px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #8b92a7;
+}
+
+/* NAV MENU */
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0 12px;
+    flex: 1;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 12px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 450;
+    color: #6b7280;
+    transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.nav-item.active {
+    background: linear-gradient(135deg, #5b8def 0%, #4c7ce5 100%);
+    color: #ffffff;
+
+    font-weight: 300;
+}
+
+.nav-icon {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2;
+    flex-shrink: 0;
+}
+
+.nav-item.active .nav-icon {
+    stroke: #ffffff;
+}
+
+/* LOGOUT */
+.logout {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 0px;
+    margin: 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #6b7280;
+    font-weight: 500;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.logout:hover {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.logout-icon {
+    width: 18px;
+    height: 18px;
+}
+
+/* MAIN CONTENT */
+.content {
+    width: calc(100% - 20%);
+    margin-left: 20%;
+    padding: 32px 40px;
+    min-height: 100vh;
+    background: #f7f8fa;
+    font-family: "Aspekta", sans-serif;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+    .sidebar {
+        transform: translateX(-100%);
+        width: 260px;
+    }
+
+    .content {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .content {
+        padding: 24px 20px;
+    }
+}

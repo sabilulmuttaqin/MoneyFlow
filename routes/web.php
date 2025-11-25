@@ -15,6 +15,10 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::get('/kategori', function () {
+    return view('featureview.kategori');
+})->middleware('auth')->name('kategori');
+
 Route::get('/dashboard', function () {
-    return "Selamat datang di dashboard!";
+    return view('featureview.home');
 })->middleware('auth')->name('dashboard');
