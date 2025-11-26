@@ -15,9 +15,9 @@ C. Kelas - NIM - Nama
 D. Link Figma
 https://www.figma.com/design/hYM8Veb9ZbRWR6EN4N8NKO/Rekayasa-Interaksi?node-id=0-1&t=vxKiD1md0ltCg3sT-1
 
-E. Worksheet : \Worksheet
+E. Worksheet : [Worksheet](./Worksheet)
 
-F. Low Fidelity : \LowFidelity
+F. Low Fidelity : [LowFidelity](./LowFidelity)
 
 G. Tabel Pembagian Tugas (Backlog)
 
