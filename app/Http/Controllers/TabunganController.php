@@ -12,7 +12,7 @@ class TabunganController extends Controller
     {
         $tabungan = Tabungan::where('user_id', Auth::id())->get();
 
-        return view('tabungan.index', compact('tabungan'));
+        return view('featureview.Tabungan.index', compact('tabungan'));
     }
 
     public function store(Request $request)
