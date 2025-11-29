@@ -13,7 +13,6 @@
     z-index: 1000;
 }
 
-
 .profile-info {
     display: flex;
     align-items: center;
@@ -66,15 +65,12 @@
 .main-content {
     margin-left: 250px; /* sesuai lebar sidebar */
     width: calc(100% - 250px); /* biar sisanya penuh */
-    padding-top: 100px;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-top: 60px;
+
     background: #f8f9fc;
     min-height: 100vh;
     box-sizing: border-box;
 }
-
-
 
 .navbar {
     position: fixed;
@@ -114,5 +110,3 @@
     font-weight: 500;
     color: #333;
 }
-
-
