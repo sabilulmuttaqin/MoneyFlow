@@ -6,7 +6,6 @@ Money Flow adalah aplikasi manajemen keuangan yang dirancang untuk membantu maha
 Dengan antarmuka yang rapi dan fokus pada kemudahan penggunaan, Money Flow memberikan pengalaman pencatatan keuangan yang ringan namun informatif, sehingga pengguna dapat memantau kondisi finansial mereka secara real-time.
 
 C. Kelas - NIM - Nama
-
 1. Rekayasa Interaksi B - Shelvi Dwi Wijayati - 202210370311369
 2. Rekayasa Interaksi B - Fawwaz Nafi Mubarok - 202210370311371
 3. Rekayasa Interaksi B - Sabilul Muttaqin - 202210370311393

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TabunganController;
 use App\Http\Controllers\SetoranController;
+use App\Http\Controllers\AnggaranController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -25,7 +26,9 @@ Route::get('/dashboard', function () {
     return view('featureview.home.home');
 })->middleware('auth')->name('dashboard');
 
-
+// =====================
+//      TABUNGAN
+// =====================
 Route::middleware(['auth'])->group(function () {
 
     // halaman tabungan
@@ -39,3 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/tabungan/{id}/setoran', [SetoranController::class, 'store'])->name('setoran.store');
 });
 
+// =====================
+//      ANGGARAN
+// =====================
+Route::resource('anggaran', AnggaranController::class)->middleware('auth');
