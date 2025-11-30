@@ -1,0 +1,118 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 250px; /* mengikuti lebar sidebar */
+    right: 0;
+    height: 70px; /* pastikan tinggi jelas */
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px;
+    border-bottom: 2px solid #eee;
+    z-index: 1000;
+}
+
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-img {
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+}
+
+.username {
+    font-weight: bold;
+}
+
+/* Sidebar width */
+.sidebar {
+    width: 240px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+}
+
+/* Navbar full width di atas */
+.navbar-top {
+    position: fixed;
+    left: 240px; /* sejajar setelah sidebar */
+    top: 0;
+    width: calc(100% - 240px);
+    height: 70px;
+    background: #ffffff;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    z-index: 1000;
+}
+
+/* Konten di bawah navbar */
+.layout {
+    display: flex;
+}
+
+/* Main content lebar penuh setelah sidebar */
+.main-content {
+    margin-left: 250px; /* sesuai lebar sidebar */
+    width: calc(100% - 250px); /* biar sisanya penuh */
+    padding-top: 100px;
+    padding-left: 40px;
+    padding-right: 40px;
+    background: #f8f9fc;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 250px; /* mengikuti lebar sidebar */
+    right: 0;
+    height: 70px; /* pastikan tinggi jelas */
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px;
+    border-bottom: 2px solid #eee;
+    z-index: 1000;
+}
+
+.navbar-left h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.username {
+    font-weight: 500;
+    color: #333;
+}
+
+
