@@ -4,9 +4,12 @@
     </div>
 
     <div class="navbar-right">
-        <div class="profile-info">
+        <div class="profile-card">
             <img src="{{ asset('images/profile.avif') }}" class="profile-img" alt="User">
-            <span class="username">{{ Auth::user()->name }}</span>
+            <div class="user-info">
+                <span class="username">{{ Auth::user()->name }}</span>
+                <span class="email">{{ Auth::user()->email }}</span>
+            </div>
         </div>
     </div>
 </nav>
