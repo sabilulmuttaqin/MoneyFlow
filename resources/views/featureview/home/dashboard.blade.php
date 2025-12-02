@@ -241,7 +241,7 @@
                 <button type="button" class="toggle-btn" data-type="income">Pemasukan</button>
             </div>
 
-            <form method="POST" action="{{ route('catat-cepat.store') }}">
+            <form method="POST" action="{{ route('catatcepat.store') }}">
                 @csrf
                 <input type="hidden" name="type" id="inputType" value="expense">
 
