@@ -4,6 +4,7 @@
     align-items: center;
     margin-bottom: 20px;
 }
+
 .page-wrapper {
     padding: 28px 36px;
     background-color: #f8f9fc;
@@ -15,6 +16,10 @@
 
 .btn-tambah {
     background: #3178ff;
+}
+
+.btn-tambah {
+    background: #3178FF;
     color: #fff;
     border: none;
     padding: 10px 18px;
@@ -34,6 +39,7 @@
     border-radius: 14px;
     padding: 16px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 6px rgba(0,0,0,.08);
 }
 
 .card-tabungan p {
@@ -43,6 +49,7 @@
 .progress-bar-container {
     width: 100%;
     background: #e5e9ff;
+    background: #E5E9FF;
     border-radius: 12px;
     height: 10px;
     margin: 6px 0;
@@ -51,6 +58,7 @@
 .progress-bar {
     height: 100%;
     background: #3178ff;
+    background: #3178FF;
     border-radius: 12px;
 }
 
@@ -67,6 +75,7 @@
 
 .btn-detail {
     background: #ffce44;
+    background: #FFCE44;
     padding: 6px 12px;
     border-radius: 7px;
     font-size: 13px;
@@ -75,6 +84,7 @@
 
 .btn-delete {
     background: #ff4e4e;
+    background: #FF4E4E;
     border: none;
     border-radius: 5px;
     padding: 6px 10px;
@@ -89,6 +99,7 @@
     align-items: center;
     position: fixed;
     background: rgba(0, 0, 0, 0.45);
+    background: rgba(0,0,0,0.45);
     width: 100%;
     height: 100%;
     top: 0;
@@ -105,6 +116,10 @@
     padding: 25px;
     width: 600px; /* Perbesar di sini */
     max-width: 90%; /* Biar tetap responsif di mobile */
+    background: linear-gradient(180deg, #D8E6FF 0%, #ECF3FE 47.12%, #D8E6FF 100%);
+    padding: 25px;
+    width: 600px;          /* Perbesar di sini */
+    max-width: 90%;        /* Biar tetap responsif di mobile */
     border-radius: 14px;
     box-sizing: border-box;
 }
@@ -121,6 +136,7 @@
 .btn-submit {
     width: 100%;
     background: #3178ff;
+    background: #3178FF;
     color: white;
     border: none;
     padding: 10px;
