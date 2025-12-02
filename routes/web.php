@@ -1,7 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AnggaranController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TabunganController;
 use App\Http\Controllers\SetoranController;
 use App\Http\Controllers\DashboardController;
@@ -40,3 +42,10 @@ Route::middleware(['auth'])->group(function () {
     // Catat Cepat (submit form modal)
     Route::post('/catat-cepat', [CatatCepatController::class, 'store'])->name('catat-cepat.store');
 });
+Route::get('/dashboard', function () {
+    return view('featureview.home.home');
+})->middleware('auth')->name('dashboard');
+
+// Menambahkan route anggaran di sini, dengan middleware auth
+Route::resource('anggaran', AnggaranController::class)->middleware('auth');
+
