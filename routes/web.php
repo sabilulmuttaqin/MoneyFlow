@@ -7,6 +7,7 @@ use App\Http\Controllers\AnggaranController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CatatCepatController;
+use App\Http\Controllers\CategoryController;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -65,4 +66,31 @@ Route::resource('anggaran', AnggaranController::class)->middleware('auth');
 
     // Catat Cepat (submit form modal)
     Route::post('/catat-cepat', [CatatCepatController::class, 'store'])->name('catat-cepat.store');
+});
+
+// =====================
+//      CATEGORY
+// =====================
+Route::middleware(['auth'])->group(function () {
+
+    // List semua kategori
+    Route::get('/kategori', [CategoryController::class, 'index'])->name('kategori.index');
+
+    // Form buat kategori baru
+    Route::get('/kategori/create', [CategoryController::class, 'create'])->name('kategori.create');
+
+    // Simpan kategori baru
+    Route::post('/kategori', [CategoryController::class, 'store'])->name('kategori.store');
+
+    // Form edit kategori
+    Route::get('/kategori/{category}/edit', [CategoryController::class, 'edit'])->name('kategori.edit');
+
+    // Update kategori
+    Route::put('/kategori/{category}', [CategoryController::class, 'update'])->name('kategori.update');
+
+    // Hapus kategori
+    Route::delete('/kategori/{category}', [CategoryController::class, 'destroy'])->name('kategori.destroy');
+
+    // Detail kategori
+    Route::get('/kategori/{category}', [CategoryController::class, 'show'])->name('kategori.show');
 });
