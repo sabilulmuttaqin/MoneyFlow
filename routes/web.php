@@ -51,7 +51,7 @@ Route::middleware(['auth'])->group(function () {
     //      ANGGARAN
     // =====================
     Route::resource('anggaran', AnggaranController::class);
-
+    Route::get('/anggaran', [AnggaranController::class, 'index'])->name('anggaran.index');
     // =====================
     //      CATEGORY
     // =====================
