@@ -10,8 +10,15 @@ class Anggaran extends Model
     use HasFactory;
 
     protected $fillable = [
-        'kategori',
-        'prosentase',
-        'nominal',
+        'user_id', // <-- WAJIB DITAMBAHKAN
+        'kebutuhan_pokok',
+        'keinginan',
+        'tabungan',
     ];
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

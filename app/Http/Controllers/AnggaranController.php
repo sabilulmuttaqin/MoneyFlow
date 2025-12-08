@@ -4,36 +4,53 @@ namespace App\Http\Controllers;
 
 use App\Models\Anggaran;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth; // Import Auth
 
 class AnggaranController extends Controller
 {
     public function index()
     {
-        $anggarans = Anggaran::all();  // Ambil seluruh data anggaran
-        return view('anggaran.index', compact('anggarans'));
+        // Ambil data anggaran untuk user yang sedang login, jika ada
+        $anggaran = Anggaran::where('user_id', Auth::id())->first();
+
+        // Jika data belum ada, buat objek Anggaran kosong dengan default 0
+        if (!$anggaran) {
+            $anggaran = new Anggaran([
+                'kebutuhan_pokok' => 0,
+                'keinginan' => 0,
+                'tabungan' => 0,
+            ]);
+        }
+
+        return view('featureview.anggaran.anggaran', compact('anggaran'));
     }
 
-    public function create()
+    // Ganti fungsi store menjadi storeOrUpdate untuk menangani penyimpanan dan pembaruan
+    public function storeOrUpdate(Request $request)
     {
-        return view('anggaran.create');  // Tampilan untuk tambah anggaran
-    }
+        $user_id = Auth::id();
 
-    public function store(Request $request)
-    {
+        // Validasi input
         $request->validate([
-            'kategori' => 'required|string',
-            'prosentase' => 'required|numeric|min:0|max:100',
-            'nominal' => 'required|numeric|min:0',
+            'kebutuhan_pokok' => 'required|numeric|min:0',
+            'keinginan' => 'required|numeric|min:0',
+            'tabungan' => 'required|numeric|min:0',
         ]);
 
-        Anggaran::create([
-            'kategori' => $request->kategori,
-            'prosentase' => $request->prosentase,
-            'nominal' => $request->nominal,
-        ]);
+        // Cari Anggaran berdasarkan user_id. Jika tidak ada, buat baru.
+        // Konsep UPSERT (Update or Insert)
+        Anggaran::updateOrCreate(
+            ['user_id' => $user_id],
+            [
+                'kebutuhan_pokok' => $request->kebutuhan_pokok,
+                'keinginan' => $request->keinginan,
+                'tabungan' => $request->tabungan,
+            ]
+        );
 
-        return redirect()->route('anggaran.index')->with('success', 'Anggaran berhasil dibuat!');
+        return redirect()->route('ringkasan.bulanan')->with('success', 'Anggaran berhasil disimpan atau diperbarui!');
     }
 
-    // Bisa tambah edit, update, destroy jika diperlukan
+    // Hapus fungsi create() karena tidak digunakan lagi
+    // Hapus fungsi store() yang lama
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\SetoranController;
 use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CatatCepatController;
+use App\Http\Controllers\RingkasanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,8 +51,12 @@ Route::middleware(['auth'])->group(function () {
     // =====================
     //      ANGGARAN
     // =====================
-    Route::resource('anggaran', AnggaranController::class);
+ // =====================
+//      ANGGARAN
+// =====================
+// Route::resource('anggaran', AnggaranController::class); // Hapus ini
     Route::get('/anggaran', [AnggaranController::class, 'index'])->name('anggaran.index');
+    Route::post('/anggaran', [AnggaranController::class, 'storeOrUpdate'])->name('anggaran.storeOrUpdate');
     // =====================
     //      CATEGORY
     // =====================
@@ -70,4 +75,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/catatcepat/{id}/edit', [CatatCepatController::class, 'edit'])->name('catatcepat.edit');
     Route::put('/catatcepat/{id}', [CatatCepatController::class, 'update'])->name('catatcepat.update');
     Route::delete('/catatcepat/{id}', [CatatCepatController::class, 'destroy'])->name('catatcepat.delete');
+
+
+    Route::get('/ringkasan-bulanan', [RingkasanController::class, 'ringkasanBulanan'])->name('ringkasan.bulanan');
 });
