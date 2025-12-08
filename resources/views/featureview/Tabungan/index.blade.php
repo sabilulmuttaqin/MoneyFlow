@@ -5,6 +5,20 @@
 @endsection
 
 @section('content')
+    @if(session('success'))
+        <div id="notifAlert" class="alert success">
+            <span class="alert-icon">✔</span>
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div id="notifAlert" class="alert error">
+            <span class="alert-icon">⚠</span>
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="page-wrapper">
 
         <!-- Header -->
@@ -22,7 +36,6 @@
                 @endphp
 
                 <div class="card-tabungan">
-
                     <div class="card-header">
                         <div class="text-section">
                             <h4>{{ $item->nama }}</h4>
@@ -32,13 +45,20 @@
                         </div>
 
                         <div class="aksi-icons">
-                            <a href="{{ route('tabungan.show', $item->id) }}" class="btn-edit">✏️</a>
+                            <button type="button" class="btn-edit"
+                                onclick="openEditModal(
+                                    '{{ $item->id }}',
+                                    '{{ $item->nama }}',
+                                    '{{ $item->target }}',
+                                    '{{ $item->setoran_awal }}'
+                                )">
+                                ✏️
+                            </button>
 
-                            <form action="#" method="POST" onsubmit="return confirm('Hapus?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn-delete">🗑️</button>
-                            </form>
+                            <button type="button" class="btn-delete"
+                                onclick="openDeleteModal('{{ $item->id }}', '{{ $item->nama }}')">
+                                🗑️
+                            </button>
                         </div>
                     </div>
 
@@ -52,12 +72,17 @@
                     </div>
 
                     <span class="progress-label">{{ round($progress) }}%</span>
-
                 </div>
             @endforeach
         </div>
 
         @include('featureview.Tabungan.modal-create')
+        @include('featureview.Tabungan.modal-edit')
+        @include('featureview.Tabungan.modal-delate')
 
     </div>
+
+    @section('scripts')
+        <script src="{{ asset('js/tabungan.js') }}"></script>
+    @endsection
 @endsection

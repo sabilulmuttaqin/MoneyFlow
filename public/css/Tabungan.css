@@ -223,3 +223,96 @@
     margin-top: 6px;
     text-align: right;
 }
+
+/* Modal Delete */
+.delete-box {
+    width: 350px;
+    text-align: center;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.delete-action {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.btn-yes {
+    flex: 1;
+    padding: 10px;
+    background: #4A86FF;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-no {
+    flex: 1;
+    padding: 10px;
+    background: #FF5B5B;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+/* Modal Edit Khusus */
+.edit-box {
+    width: 360px;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.alert {
+    position: fixed;
+    top: 80px;
+    right: 30px;
+    padding: 14px 22px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    font-weight: 500;
+    z-index: 2000;
+    opacity: 0;
+    transform: translateY(-10px);
+    animation: slide-in 0.4s forwards, fade-out 0.4s ease 3s forwards;
+}
+
+.alert-icon {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.alert.success {
+    background-color: #25AE4F; /* Hijau */
+}
+
+.alert.error {
+    background-color: #E74C3C; /* Merah */
+}
+
+@keyframes slide-in {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-out {
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+
+
