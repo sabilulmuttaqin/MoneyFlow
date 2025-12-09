@@ -193,9 +193,9 @@
                         <div>
                             <div class="card-title">Recent Activity</div>
                         </div>
-                        <button class="btn-see-all" type="button">
+                        <a href="{{ route('catat-cepat.index') }}" class="btn-see-all">
                             Lihat semua
-                        </button>
+                        </a>
                     </div>
 
                     @if ($recentActivities->isEmpty())
