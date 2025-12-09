@@ -10,7 +10,7 @@ class AnggaranController extends Controller
     public function index()
     {
         $anggarans = Anggaran::all();  // Ambil seluruh data anggaran
-        return view('anggaran.index', compact('anggarans'));
+        return view('featureview.anggaran.anggaran', compact('anggarans'));
     }
 
     public function create()
