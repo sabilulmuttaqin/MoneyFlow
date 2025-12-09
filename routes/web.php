@@ -37,6 +37,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tabungan/{id}', [TabunganController::class, 'show'])->name('tabungan.show');
     Route::post('/tabungan/{id}/setoran', [SetoranController::class, 'store'])->name('setoran.store');
 
-    // Catat Cepat (submit form modal)
+    // // Catat Cepat (submit form modal)
+    // Route::post('/catat-cepat', [CatatCepatController::class, 'store'])->name('catat-cepat.store');
+
+    // // Tambahkan ini - List semua transaksi catat cepat
+    // Route::get('/catat-cepat', [CatatCepatController::class, 'index'])->name('catatepat.index');
+    // Route::delete('/catat-cepat/{id}', [CatatCepatController::class, 'destroy'])->name('catat-cepat.destroy');
+    // // Catat Cepat
     Route::post('/catat-cepat', [CatatCepatController::class, 'store'])->name('catat-cepat.store');
+    Route::get('/catat-cepat', [CatatCepatController::class, 'index'])->name('catat-cepat.index');
+    Route::put('/catat-cepat/{id}', [CatatCepatController::class, 'update'])->name('catat-cepat.update');
+    Route::delete('/catat-cepat/{id}', [CatatCepatController::class, 'destroy'])->name('catat-cepat.destroy');
 });
