@@ -21,7 +21,6 @@ body {
     margin-bottom: 16px;
 }
 
-/* BUTTON CATAT CEPAT - Lebih mirip design */
 .btn-quick {
     padding: 12px 24px;
     border-radius: 12px;
@@ -50,7 +49,6 @@ body {
     font-weight: 500;
 }
 
-/* NOTIFIKASI SUKSES DI BAWAH PROFILE (KANAN ATAS) */
 .success-alert {
     position: fixed;
     top: 80px; /* atur saja, 70–90 px, sampai pas di bawah navbar/profile */
