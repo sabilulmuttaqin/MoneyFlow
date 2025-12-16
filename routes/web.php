@@ -46,6 +46,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/tabungan', [TabunganController::class, 'store'])->name('tabungan.store');
     Route::get('/tabungan/{id}', [TabunganController::class, 'show'])->name('tabungan.show');
     Route::post('/tabungan/{id}/setoran', [SetoranController::class, 'store'])->name('setoran.store');
+    Route::put('/tabungan/{id}', [TabunganController::class, 'update'])->name('tabungan.update');
+    Route::delete('/tabungan/{id}', [TabunganController::class, 'destroy'])->name('tabungan.destroy');
+
 
     // =====================
     //      ANGGARAN

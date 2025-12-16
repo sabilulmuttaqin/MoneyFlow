@@ -41,6 +41,35 @@ class TabunganController extends Controller
         $tabungan = Tabungan::where('user_id', Auth::id())->findOrFail($id);
         $setoran = $tabungan->setoran()->latest()->get();
 
-        return view('tabungan.detail', compact('tabungan', 'setoran'));
+        return view('featureview.Tabungan.detail', compact('tabungan', 'setoran'));
     }
+
+    public function update(Request $request, $id)
+    {
+    $request->validate([
+        'nama' => 'required|string',
+        'target' => 'required|numeric',
+        'setoran_awal' => 'required|numeric'
+    ]);
+
+    $tabungan = Tabungan::where('user_id', Auth::id())->findOrFail($id);
+
+    $tabungan->update([
+        'nama' => $request->nama,
+        'target' => $request->target,
+        'setoran_awal' => $request->setoran_awal
+    ]);
+
+    return redirect()->back()->with('success', 'Tabungan berhasil diperbarui!');
+    }
+
+
+
+    public function destroy($id)
+    {
+    Tabungan::findOrFail($id)->delete();
+
+    return redirect()->back()->with('success', 'Tabungan berhasil dihapus!');
+    }   
+
 }
