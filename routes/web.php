@@ -48,14 +48,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tabungan/{id}', [TabunganController::class, 'show'])->name('tabungan.show');
     Route::post('/tabungan/{id}/setoran', [SetoranController::class, 'store'])->name('setoran.store');
 
-
     // =====================
     //      ANGGARAN
     // =====================
- // =====================
-//      ANGGARAN
-// =====================
-// Route::resource('anggaran', AnggaranController::class); // Hapus ini
+    // Route::resource('anggaran', AnggaranController::class); // Hapus ini
     Route::get('/anggaran', [AnggaranController::class, 'index'])->name('anggaran.index');
     Route::post('/anggaran', [AnggaranController::class, 'storeOrUpdate'])->name('anggaran.storeOrUpdate');
     // =====================
