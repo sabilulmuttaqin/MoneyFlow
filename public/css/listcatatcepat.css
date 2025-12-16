@@ -4,15 +4,6 @@ body {
     overflow-y: auto;
 }
 
-.page-wrapper {
-    padding: 24px 28px;
-    background-color: #f8f9fc;
-    min-height: calc(100vh - 72px);
-    max-width: 100vw;
-    overflow-x: hidden;
-    box-sizing: border-box;
-}
-
 /* Page Header */
 .page-header {
     margin-bottom: 24px;
@@ -117,14 +108,6 @@ body {
 }
 
 /* CARD VALUE EXPENSE - SAMA DENGAN DASHBOARD */
-.card-value-expense {
-    color: #dc2626;
-}
-
-/* CARD VALUE INCOME - SAMA DENGAN DASHBOARD */
-.card-value-income {
-    color: #16a34a;
-}
 
 /* CARD SUBTITLE - SAMA DENGAN DASHBOARD */
 .card-subtitle {

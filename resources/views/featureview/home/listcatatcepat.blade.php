@@ -109,7 +109,7 @@
                             <tr>
                                 <td>
                                     <div class="activity-name">{{ $transaction->name }}</div>
-                                    <div class="activity-category">{{ $transaction->category }}</div>
+                                    <div class="activity-category">{{ $transaction->category_id }}</div>
                                 </td>
                                 <td>
                                     <span class="status-badge {{ $transaction->type }}">
@@ -126,7 +126,7 @@
                                 <td>
                                     <div class="action-buttons">
                                         <button type="button" class="action-btn edit"
-                                            onclick="openEditModal({{ $transaction->id }}, '{{ $transaction->type }}', '{{ $transaction->category }}', '{{ $transaction->name }}', {{ $transaction->amount }})"
+                                            onclick="openEditModal({{ $transaction->id }}, '{{ $transaction->type }}', '{{ $transaction->category_id }}', '{{ $transaction->name }}', {{ $transaction->amount }})"
                                             title="Edit">
                                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
                                                 stroke="currentColor" stroke-width="2">
@@ -173,8 +173,14 @@
 
                 <div class="form-group">
                     <label class="form-label">Kategori</label>
-                    <input type="text" name="category" id="editCategory" class="form-input"
-                        placeholder="Contoh: Makanan, Transport">
+                    <select name="category_id" id="editCategory" class="form-input">
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+
                 </div>
 
                 <div class="form-group">
