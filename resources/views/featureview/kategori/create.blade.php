@@ -2,11 +2,27 @@
 
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/Category.css') }}">
+
 <div class="container mt-4">
     <h3 class="mb-4">Tambah Kategori Baru</h3>
 
+    @php
+        // Ambil anggaran pertama milik user yang login
+        $anggaran = \App\Models\Anggaran::where('user_id', auth()->id())->first();
+        $anggaran_id = optional($anggaran)->id; // null jika belum ada
+    @endphp
+
+    @if(!$anggaran)
+        <div class="alert alert-warning">
+            Anda belum memiliki anggaran. Silakan buat anggaran terlebih dahulu.
+        </div>
+    @endif
+
     <form action="{{ route('kategori.store') }}" method="POST">
         @csrf
+
+        {{-- Hidden input untuk anggaran_id --}}
+        <input type="hidden" name="anggaran_id" value="{{ $anggaran_id }}">
 
         {{-- Nama Kategori --}}
         <div class="mb-3">
@@ -52,7 +68,7 @@
 
         {{-- Tombol --}}
         <div class="d-flex gap-2">
-            <button type="submit" class="btn btn-primary">Simpan</button>
+            <button type="submit" class="btn btn-primary" @if(!$anggaran) disabled @endif>Simpan</button>
             <a href="{{ route('kategori.index') }}" class="btn btn-secondary">Kembali</a>
         </div>
     </form>

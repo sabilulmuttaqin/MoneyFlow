@@ -8,13 +8,14 @@ return new class extends Migration
 {
     public function up(): void
     {
+
         Schema::create('fast_records', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->enum('type', ['expense', 'income']); // Pengeluaran / Pemasukan
-            $table->string('category');                   // pakai string dulu, belum relasi
-            $table->string('name');                       // nama pengeluaran / pemasukan
-            $table->decimal('amount', 15, 2);             // nominal
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
+            $table->enum('type', ['expense', 'income']);
+            $table->string('name');
+            $table->decimal('amount', 15, 2);
             $table->timestamps();
         });
     }

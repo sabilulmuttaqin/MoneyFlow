@@ -16,6 +16,13 @@ return new class extends Migration {
                   ->on('anggarans')
                   ->onDelete('cascade');
 
+            // Relasi ke user
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
+                  ->references('id')
+                  ->on('users')
+                  ->onDelete('cascade');
+
             $table->string('name');
             $table->string('icon')->nullable();
             $table->integer('budget')->default(0);
