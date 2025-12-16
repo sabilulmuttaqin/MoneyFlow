@@ -78,4 +78,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/ringkasan-bulanan', [RingkasanController::class, 'ringkasanBulanan'])->name('ringkasan.bulanan');
+    Route::get('/ringkasan/minggu/{minggu}', [RingkasanController::class, 'detailMingguan'])
+        ->where('minggu', '[1-4]')
+        ->name('ringkasan.mingguan');
 });

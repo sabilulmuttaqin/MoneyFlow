@@ -77,10 +77,11 @@
         background: #E5E6EB;
         border-radius: 28px;
         box-shadow: 0 26px 55px rgba(15, 23, 42, 0.35);
-        display: none;           /* default: sembunyi */
+        display: none;
         max-height: 220px;
         overflow-y: auto;
         min-width: 100%;
+        z-index: 50;
     }
 
     .month-list.show {
@@ -90,14 +91,21 @@
     .month-item {
         display: block;
         font-size: 14px;
-        padding: 3px 0;
+        padding: 6px 0;
         text-align: center;
         text-decoration: none;
         color: #111827;
+        border-radius: 10px;
     }
 
     .month-item:hover {
         color: #2F6BFF;
+        text-decoration: underline;
+    }
+
+    .month-item.active {
+        color: #2F6BFF;
+        font-weight: 700;
         text-decoration: underline;
     }
     /* ===== END CUSTOM DROPDOWN ===== */
@@ -154,14 +162,8 @@
         font-size: 15px;
     }
 
-    .summary-row .label {
-        color: #000000;
-    }
-
-    .summary-row .value {
-        font-weight: 500;
-        color: #000000;
-    }
+    .summary-row .label { color: #000000; }
+    .summary-row .value { font-weight: 500; color: #000000; }
 
     .summary-box hr {
         margin: 10px 0 8px;
@@ -187,9 +189,7 @@
         margin-bottom: 6px;
     }
 
-    .legend-item:last-child {
-        margin-bottom: 0;
-    }
+    .legend-item:last-child { margin-bottom: 0; }
 
     .legend-dot {
         width: 16px;
@@ -219,6 +219,7 @@
         max-width: 360px;
         box-shadow: 0 22px 40px rgba(47, 107, 255, 0.7);
         text-align: center;
+        cursor: pointer;
     }
 
     .btn-weekly:hover {
@@ -226,34 +227,96 @@
         color: #ffffff;
     }
 
+    /* ===== MODAL DETAIL MINGGUAN (JANGAN DI DALAM @media) ===== */
+    .weekly-modal-overlay{
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,.35);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        padding: 18px;
+    }
+
+    .weekly-modal-overlay.show{ display: flex; }
+
+    .weekly-modal{
+        width: 720px;
+        max-width: 100%;
+        border-radius: 34px;
+        background: radial-gradient(circle at 30% 20%, #F6FAFF 0%, #EAF2FF 40%, #DCE9FF 100%);
+        box-shadow: 0 28px 70px rgba(15,23,42,.35);
+        padding: 28px 30px 30px;
+        position: relative;
+    }
+
+    .weekly-modal-header{
+        display:flex;
+        align-items:center;
+        justify-content: space-between;
+        margin-bottom: 22px;
+    }
+
+    .weekly-modal-title{
+        font-size: 26px;
+        font-weight: 500;
+        color: #0f172a;
+        margin: 0;
+    }
+
+    .weekly-modal-close{
+        width: 44px;
+        height: 44px;
+        border: none;
+        background: transparent;
+        font-size: 32px;
+        line-height: 1;
+        cursor: pointer;
+        color: #0f172a;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+    }
+    .weekly-modal-close:hover{ background: rgba(15,23,42,.06); }
+
+    .weekly-modal-grid{
+        display:grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px 28px;
+    }
+
+    .weekly-pill{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        height: 64px;
+        border-radius: 999px;
+        background: #4B86FF;
+        color: #ffffff;
+        font-size: 20px;
+        font-weight: 500;
+        text-decoration: none;
+        box-shadow: 0 18px 40px rgba(75,134,255,.35);
+        border: none;
+        cursor: pointer;
+    }
+    .weekly-pill:hover{ filter: brightness(.95); }
+
+    @media (max-width: 560px){
+        .weekly-modal-title{ font-size: 20px; }
+        .weekly-modal-grid{ grid-template-columns: 1fr; }
+        .weekly-pill{ height: 58px; font-size: 18px; }
+    }
+
     @media (max-width: 991.98px) {
-        .summary-page {
-            padding: 24px 16px 32px 16px;
-        }
+        .summary-page { padding: 24px 16px 32px 16px; }
+        .summary-inner { max-width: 100%; }
+        .summary-header { flex-direction: column; align-items: flex-start; gap: 14px; }
+        .summary-main { grid-template-columns: 1fr; row-gap: 32px; }
+        .summary-right { align-items: flex-start; padding-top: 0; }
 
-        .summary-inner {
-            max-width: 100%;
-        }
-
-        .summary-header {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 14px;
-        }
-
-        .summary-main {
-            grid-template-columns: 1fr;
-            row-gap: 32px;
-        }
-
-        .summary-right {
-            align-items: flex-start;
-            padding-top: 0;
-        }
-
-        .legend-card,
-        .btn-weekly,
-        .summary-box {
+        .legend-card, .btn-weekly, .summary-box {
             width: 100%;
             max-width: 100%;
         }
@@ -261,7 +324,7 @@
 </style>
 
 @php
-    $tahunDropdown = date('Y'); // tahun yang mau ditampilkan
+    $tahunDropdown = date('Y');
     $namaBulan = [
         1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
         5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus',
@@ -271,6 +334,7 @@
 
 <div class="summary-page">
     <div class="summary-inner">
+
         <header class="summary-header">
             <h1>Ringkasan Bulan ini</h1>
 
@@ -278,15 +342,14 @@
             <div class="month-selector">
                 <button type="button" class="month-toggle" id="monthToggle">
                     <span>{{ $dataRingkasan['bulan_tahun'] }}</span>
-                    <span class="month-toggle-icon">&#9662;</span> {{-- panah ▼ --}}
+                    <span class="month-toggle-icon">&#9662;</span>
                 </button>
 
                 <div class="month-list" id="monthList">
-                    @foreach ($namaBulan as $m => $label)
-                        {{-- Ubah href jadi route/filter punyamu sendiri kalau perlu --}}
-                        <a href="#"
-                           class="month-item">
-                            {{ $label . ' ' . $tahunDropdown }}
+                    @foreach ($availableMonths as $month)
+                        <a href="{{ url()->current() }}?bulan={{ $month['value'] }}"
+                           class="month-item {{ request('bulan', now()->format('Y-m')) == $month['value'] ? 'active' : '' }}">
+                            {{ $month['label'] }}
                         </a>
                     @endforeach
                 </div>
@@ -294,7 +357,7 @@
         </header>
 
         <div class="summary-main">
-            {{-- Kiri: donut + box ringkasan --}}
+            {{-- Kiri --}}
             <div class="summary-left">
                 <div class="donut-wrapper">
                     <canvas id="anggaranDonutChart"></canvas>
@@ -317,7 +380,7 @@
                 </div>
             </div>
 
-            {{-- Kanan: legend + tombol --}}
+            {{-- Kanan --}}
             <div class="summary-right">
                 <div class="legend-card">
                     <div class="legend-item">
@@ -337,10 +400,36 @@
                     </div>
                 </div>
 
-                <button class="btn-weekly">
+                <button class="btn-weekly" id="weeklyDetailBtn" type="button">
                     Lihat Detail Per Minggu
                 </button>
             </div>
+        </div>
+
+    </div>
+</div>
+
+{{-- MODAL: Detail Per Minggu --}}
+<div class="weekly-modal-overlay" id="weeklyModal" aria-hidden="true">
+    <div class="weekly-modal" role="dialog" aria-modal="true" aria-labelledby="weeklyModalTitle">
+        <div class="weekly-modal-header">
+            <h2 class="weekly-modal-title" id="weeklyModalTitle">
+                Bulan {{ $dataRingkasan['bulan_tahun'] }}
+            </h2>
+
+            <button type="button" class="weekly-modal-close" id="weeklyModalClose" aria-label="Tutup">
+                &times;
+            </button>
+        </div>
+
+        <div class="weekly-modal-grid">
+            @php $bulanParam = request('bulan', now()->format('Y-m')); @endphp
+
+            <a class="weekly-pill" href="{{ route('ringkasan.mingguan', 1) }}?bulan={{ $bulanParam }}">Minggu Ke-1</a>
+            <a class="weekly-pill" href="{{ route('ringkasan.mingguan', 2) }}?bulan={{ $bulanParam }}">Minggu Ke-2</a>
+            <a class="weekly-pill" href="{{ route('ringkasan.mingguan', 3) }}?bulan={{ $bulanParam }}">Minggu Ke-3</a>
+            <a class="weekly-pill" href="{{ route('ringkasan.mingguan', 4) }}?bulan={{ $bulanParam }}">Minggu Ke-4</a>
+
         </div>
     </div>
 </div>
@@ -348,26 +437,58 @@
 {{-- Chart.js --}}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // === Toggle dropdown bulan ===
-        const monthToggle = document.getElementById('monthToggle');
-        const monthList   = document.getElementById('monthList');
+document.addEventListener('DOMContentLoaded', function () {
+    // === Toggle dropdown bulan ===
+    const monthToggle = document.getElementById('monthToggle');
+    const monthList   = document.getElementById('monthList');
 
-        if (monthToggle && monthList) {
-            monthToggle.addEventListener('click', function (e) {
-                e.stopPropagation();
-                monthList.classList.toggle('show');
-            });
+    if (monthToggle && monthList) {
+        monthToggle.addEventListener('click', function (e) {
+            e.stopPropagation();
+            monthList.classList.toggle('show');
+        });
 
-            document.addEventListener('click', function (e) {
-                if (!monthList.contains(e.target) && !monthToggle.contains(e.target)) {
-                    monthList.classList.remove('show');
-                }
-            });
-        }
+        document.addEventListener('click', function (e) {
+            if (!monthList.contains(e.target) && !monthToggle.contains(e.target)) {
+                monthList.classList.remove('show');
+            }
+        });
+    }
 
-        // === Chart donut ===
-        const ctx = document.getElementById('anggaranDonutChart').getContext('2d');
+    // === Modal mingguan ===
+    const weeklyBtn   = document.getElementById('weeklyDetailBtn');
+    const weeklyModal = document.getElementById('weeklyModal');
+    const weeklyClose = document.getElementById('weeklyModalClose');
+
+    function openWeeklyModal(){
+        weeklyModal.classList.add('show');
+        weeklyModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeWeeklyModal(){
+        weeklyModal.classList.remove('show');
+        weeklyModal.setAttribute('aria-hidden', 'true');
+    }
+
+    if (weeklyBtn && weeklyModal && weeklyClose) {
+        weeklyBtn.addEventListener('click', openWeeklyModal);
+        weeklyClose.addEventListener('click', closeWeeklyModal);
+
+        weeklyModal.addEventListener('click', (e) => {
+            if (e.target === weeklyModal) closeWeeklyModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && weeklyModal.classList.contains('show')) {
+                closeWeeklyModal();
+            }
+        });
+    }
+
+    // === Chart donut ===
+    const canvas = document.getElementById('anggaranDonutChart');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
         const dataRingkasan = @json($dataRingkasan);
 
         new Chart(ctx, {
@@ -380,11 +501,7 @@
                         dataRingkasan.persentase_keinginan,
                         dataRingkasan.persentase_tabungan
                     ],
-                    backgroundColor: [
-                        '#7B7DA4',
-                        '#F8B400',
-                        '#00D394',
-                    ],
+                    backgroundColor: ['#7B7DA4', '#F8B400', '#00D394'],
                     borderWidth: 0,
                     hoverOffset: 4
                 }]
@@ -394,11 +511,10 @@
                 maintainAspectRatio: false,
                 cutout: '62%',
                 rotation: -90,
-                plugins: {
-                    legend: { display: false }
-                }
+                plugins: { legend: { display: false } }
             }
         });
-    });
+    }
+});
 </script>
 @endsection
