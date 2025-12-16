@@ -41,7 +41,7 @@ class TabunganController extends Controller
         $tabungan = Tabungan::where('user_id', Auth::id())->findOrFail($id);
         $setoran = $tabungan->setoran()->latest()->get();
 
-        return view('tabungan.detail', compact('tabungan', 'setoran'));
+        return view('featureview.Tabungan.detail', compact('tabungan', 'setoran'));
     }
 
     public function update(Request $request, $id)
