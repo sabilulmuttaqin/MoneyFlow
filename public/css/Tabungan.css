@@ -1,20 +1,17 @@
+/* =========================
+   PAGE & HEADER
+========================= */
+.page-wrapper {
+    background-color: #f8f9fc;
+    min-height: calc(100vh - 72px);
+    padding: 20px;
+}
+
 .header-section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-}
-
-.page-wrapper {
-    background-color: #f8f9fc;
-    min-height: calc(100vh - 72px);
-    max-width: 100vw;
-    overflow-x: hidden;
-    box-sizing: border-box;
-}
-
-.btn-tambah {
-    background: #3178ff;
+    margin-bottom: 24px;
 }
 
 .btn-tambah {
@@ -25,107 +22,211 @@
     border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
+    transition: background 0.2s ease;
 }
 
+.btn-tambah:hover {
+    background: #245fda;
+}
+
+/* =========================
+   GRID TABUNGAN
+========================= */
 .tabungan-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 18px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
 }
 
+@media (max-width: 768px) {
+    .tabungan-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================
+   CARD TABUNGAN
+========================= */
 .card-tabungan {
-    background: #fff;
+    position: relative;
+    background: #ffffff;
     border-radius: 14px;
-    padding: 16px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    padding: 18px 20px;
+    min-height: 155px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    cursor: pointer;
+    transition: all 0.25s ease;
 }
 
-.card-tabungan p {
-    margin: 6px 0;
+.card-tabungan:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
 }
 
-.progress-bar-container {
+/* =========================
+   CARD HEADER
+========================= */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.text-section h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    padding-right: 50px;
+}
+
+.text-section .target {
+    font-size: 13px;
+    color: #8b8b8b;
+}
+
+/* =========================
+   ACTION ICONS
+========================= */
+.aksi-icons {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    display: flex;
+    gap: 10px;
+    z-index: 3;
+}
+
+
+.aksi-icons button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.aksi-icons button:hover {
+    opacity: 1;
+    background: #f0f4ff;
+}
+
+.btn-delete {
+    color: #ff4d4f;
+}
+
+/* =========================
+   CONTENT
+========================= */
+.sekang {
+    margin-top: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+/* =========================
+   PROGRESS BAR
+========================= */
+.progress-section {
     width: 100%;
-    background: #e5e9ff;
-    background: #e5e9ff;
-    border-radius: 12px;
     height: 10px;
-    margin: 6px 0;
+    background: #eef0ff;
+    border-radius: 10px;
+    margin-top: 12px;
+    overflow: hidden;
 }
 
 .progress-bar {
     height: 100%;
-    background: #3178ff;
-    background: #3178ff;
-    border-radius: 12px;
+    border-radius: 10px;
+    transition: width 0.4s ease;
+}
+
+/* Warna progress beda tiap card */
+.card-tabungan:nth-child(4n + 1) .progress-bar {
+    background: #6c63ff;
+}
+
+.card-tabungan:nth-child(4n + 2) .progress-bar {
+    background: #ffb020;
+}
+
+.card-tabungan:nth-child(4n + 3) .progress-bar {
+    background: #ff5c5c;
+}
+
+.card-tabungan:nth-child(4n + 4) .progress-bar {
+    background: #2ecc71;
 }
 
 .progress-label {
-    font-size: 12px;
-    font-weight: bold;
-}
-
-.aksi {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-}
-
-.btn-detail {
-    background: #ffce44;
-    background: #ffce44;
-    padding: 6px 12px;
-    border-radius: 7px;
+    margin-top: 6px;
+    display: block;
+    text-align: right;
     font-size: 13px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
-.btn-delete {
-    background: #ff4e4e;
-    background: #ff4e4e;
-    border: none;
-    border-radius: 5px;
-    padding: 6px 10px;
-    cursor: pointer;
-    color: white;
+/* =========================
+   ALERT
+========================= */
+.alert {
+    position: fixed;
+    top: 80px;
+    right: 30px;
+    padding: 14px 22px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    font-weight: 500;
+    z-index: 2000;
+    opacity: 0;
+    transform: translateY(-10px);
+    animation: slide-in 0.4s forwards, fade-out 0.4s ease 3s forwards;
 }
 
-/* Modal */
+.alert.success {
+    background-color: #25AE4F;
+}
+
+.alert.error {
+    background-color: #E74C3C;
+}
+
+@keyframes slide-in {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-out {
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+/* =========================
+   MODAL (GLOBAL)
+========================= */
 .modal {
     display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
     justify-content: center;
     align-items: center;
-    position: fixed;
-    background: rgba(0, 0, 0, 0.45);
-    background: rgba(0, 0, 0, 0.45);
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
 }
 
 .modal-content {
-    background: linear-gradient(
-        180deg,
-        #d8e6ff 0%,
-        #ecf3fe 47.12%,
-        #d8e6ff 100%
-    );
+    background: linear-gradient(180deg, #d8e6ff, #ecf3fe);
     padding: 25px;
-    width: 600px; /* Perbesar di sini */
-    max-width: 90%; /* Biar tetap responsif di mobile */
-    background: linear-gradient(
-        180deg,
-        #d8e6ff 0%,
-        #ecf3fe 47.12%,
-        #d8e6ff 100%
-    );
-    padding: 25px;
-    width: 600px; /* Perbesar di sini */
-    max-width: 90%; /* Biar tetap responsif di mobile */
     border-radius: 14px;
-    box-sizing: border-box;
+    width: 360px;
 }
 
 .modal-content input {
@@ -140,7 +241,6 @@
 .btn-submit {
     width: 100%;
     background: #3178ff;
-    background: #3178ff;
     color: white;
     border: none;
     padding: 10px;
@@ -151,75 +251,4 @@
     float: right;
     cursor: pointer;
     font-size: 20px;
-}
-
-.card-tabungan {
-    background: #fff;
-    border-radius: 14px;
-    padding: 18px;
-    margin-bottom: 20px;
-    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.08);
-}
-
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.text-section h4 {
-    font-size: 17px;
-    margin-bottom: 4px;
-    font-weight: 600;
-}
-
-.text-section .target {
-    font-size: 13px;
-    color: #7c7c7c;
-}
-
-.aksi-icons {
-    display: flex;
-    gap: 10px;
-}
-
-.aksi-icons a,
-.aksi-icons button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-}
-
-.btn-delete {
-    color: #ff2b2b;
-}
-
-.sekang {
-    margin-top: 10px;
-    font-weight: 500;
-    font-size: 14px;
-}
-
-.progress-section {
-    width: 100%;
-    height: 12px;
-    background: #e7e7ff;
-    border-radius: 10px;
-    margin-top: 10px;
-    position: relative;
-}
-
-.progress-bar {
-    height: 100%;
-    background: #7064ff;
-    border-radius: 10px;
-}
-
-.progress-label {
-    font-size: 14px;
-    font-weight: bold;
-    display: block;
-    margin-top: 6px;
-    text-align: right;
 }

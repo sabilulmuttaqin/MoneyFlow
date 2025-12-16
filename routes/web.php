@@ -47,14 +47,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/tabungan', [TabunganController::class, 'store'])->name('tabungan.store');
     Route::get('/tabungan/{id}', [TabunganController::class, 'show'])->name('tabungan.show');
     Route::post('/tabungan/{id}/setoran', [SetoranController::class, 'store'])->name('setoran.store');
+    Route::put('/tabungan/{id}', [TabunganController::class, 'update'])->name('tabungan.update');
+    Route::delete('/tabungan/{id}', [TabunganController::class, 'destroy'])->name('tabungan.destroy');
+
 
     // =====================
     //      ANGGARAN
     // =====================
- // =====================
-//      ANGGARAN
-// =====================
-// Route::resource('anggaran', AnggaranController::class); // Hapus ini
+    // Route::resource('anggaran', AnggaranController::class); // Hapus ini
     Route::get('/anggaran', [AnggaranController::class, 'index'])->name('anggaran.index');
     Route::post('/anggaran', [AnggaranController::class, 'storeOrUpdate'])->name('anggaran.storeOrUpdate');
     // =====================
@@ -81,4 +81,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/ringkasan/minggu/{minggu}', [RingkasanController::class, 'detailMingguan'])
         ->where('minggu', '[1-4]')
         ->name('ringkasan.mingguan');
+    // // Catat Cepat (submit form modal)
+    // Route::post('/catat-cepat', [CatatCepatController::class, 'store'])->name('catat-cepat.store');
+
+    // // Tambahkan ini - List semua transaksi catat cepat
+    // Route::get('/catat-cepat', [CatatCepatController::class, 'index'])->name('catatepat.index');
+    // Route::delete('/catat-cepat/{id}', [CatatCepatController::class, 'destroy'])->name('catat-cepat.destroy');
+    // // Catat Cepat
+    Route::post('/catat-cepat', [CatatCepatController::class, 'store'])->name('catat-cepat.store');
+    Route::get('/catat-cepat', [CatatCepatController::class, 'index'])->name('catat-cepat.index');
+    Route::put('/catat-cepat/{id}', [CatatCepatController::class, 'update'])->name('catat-cepat.update');
+    Route::delete('/catat-cepat/{id}', [CatatCepatController::class, 'destroy'])->name('catat-cepat.destroy');
 });

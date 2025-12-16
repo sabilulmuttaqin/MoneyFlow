@@ -10,11 +10,18 @@ return new class extends Migration {
             $table->id();
             
             // Relasi ke anggaran
-            // $table->unsignedBigInteger('anggaran_id');
-            // $table->foreign('anggaran_id')
-            //       ->references('id')
-            //       ->on('anggarans')
-            //       ->onDelete('cascade');
+            $table->unsignedBigInteger('anggaran_id');
+            $table->foreign('anggaran_id')
+                  ->references('id')
+                  ->on('anggarans')
+                  ->onDelete('cascade');
+
+            // Relasi ke user
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
+                  ->references('id')
+                  ->on('users')
+                  ->onDelete('cascade');
 
             $table->string('name');
             $table->string('icon')->nullable();

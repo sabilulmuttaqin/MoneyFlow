@@ -193,9 +193,10 @@
                         <div>
                             <div class="card-title">Recent Activity</div>
                         </div>
-                        <button class="btn-see-all" type="button">
+                        <a href="{{ route('catat-cepat.index') }}" class="btn-see-all">
                             Lihat semua
-                        </button>
+                        </a>
+
                     </div>
 
                     @if ($recentActivities->isEmpty())
@@ -213,7 +214,7 @@
                                     <div class="recent-left">
                                         <div class="recent-name">{{ $item->name }}</div>
                                         <div class="recent-meta">
-                                            {{ $item->category }} · {{ $item->created_at->format('d M Y, H:i') }}
+                                            {{ $item->category->name }} · {{ $item->created_at->format('d M Y, H:i') }}
                                         </div>
                                     </div>
                                     <div class="recent-amount {{ $isExpense ? 'expense' : 'income' }}">
@@ -247,8 +248,15 @@
 
                 <div class="form-group">
                     <label class="form-label">Kategori</label>
-                    <input type="text" name="category" class="form-input" placeholder="Contoh: Makanan, Transport"
-                        value="{{ old('category') }}">
+                    <select name="category_id" class="form-input">
+                        <option value="">Pilih Kategori</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+
                     @error('category')
                         <div class="error-text">{{ $message }}</div>
                     @enderror
@@ -285,9 +293,9 @@
                         <div class="template-chips" id="templateChipsExpense">
                             @foreach ($lastExpenseTemplates as $tpl)
                                 <button type="button" class="template-chip" data-type="expense"
-                                    data-category="{{ $tpl->category }}" data-name="{{ $tpl->name }}"
+                                    {{-- data-category="{{ $tpl->category }}" --}}data-name="{{ $tpl->name }}"
                                     data-amount="{{ $tpl->amount }}">
-                                    {{ $tpl->category }} · {{ $tpl->name }} ·
+                                    {{-- {{ $tpl->category->name ?? '-' }} --}}{{ $tpl->name }}
                                     Rp {{ number_format($tpl->amount, 0, ',', '.') }}
                                 </button>
                             @endforeach
@@ -298,10 +306,9 @@
                     @if (($lastIncomeTemplates ?? collect())->isNotEmpty())
                         <div class="template-chips" id="templateChipsIncome" style="display: none;">
                             @foreach ($lastIncomeTemplates as $tpl)
-                                <button type="button" class="template-chip" data-type="income"
-                                    data-category="{{ $tpl->category }}" data-name="{{ $tpl->name }}"
-                                    data-amount="{{ $tpl->amount }}">
-                                    {{ $tpl->category }} · {{ $tpl->name }} ·
+                                <button type="button" class="template-chip" data-type="income" {{-- data-category="{{ $tpl->category }}" --}}
+                                    data-name="{{ $tpl->name }}" data-amount="{{ $tpl->amount }}">
+                                    {{-- {{ $tpl->category }} · --}}{{ $tpl->name }}
                                     Rp {{ number_format($tpl->amount, 0, ',', '.') }}
                                 </button>
                             @endforeach
