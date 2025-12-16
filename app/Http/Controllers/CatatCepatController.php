@@ -6,12 +6,14 @@ use App\Models\FastRecord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Models\Category;
 
 class CatatCepatController extends Controller
 {
     public function index(Request $request)
     {
         $user = Auth::user();
+        $categories = Category::where('user_id', $user->id)->get();
 
         // Ambil bulan yang dipilih dari dropdown (default bulan ini)
         $selectedMonth = $request->get('month', now()->format('Y-m'));
@@ -55,7 +57,9 @@ class CatatCepatController extends Controller
             'monthlyExpense',
             'monthlyIncome',
             'availableMonths',
-            'selectedMonth'
+            'selectedMonth',
+            'categories',
+
         ));
     }
 
@@ -63,7 +67,7 @@ class CatatCepatController extends Controller
     {
         $validated = $request->validate([
             'type'     => 'required|in:expense,income',
-            'category' => 'required|string|max:100',
+            'category_id' => 'required|exists:categories,id',
             'name'     => 'required|string|max:255',
             'amount'   => 'required|numeric|min:0.01',
         ]);
@@ -71,7 +75,7 @@ class CatatCepatController extends Controller
         FastRecord::create([
             'user_id'  => Auth::id(),
             'type'     => $validated['type'],
-            'category' => $validated['category'],
+            'category_id' => $validated['category_id'],
             'name'     => $validated['name'],
             'amount'   => $validated['amount'],
         ]);
@@ -83,7 +87,7 @@ class CatatCepatController extends Controller
     {
         $validated = $request->validate([
             'type'     => 'required|in:expense,income',
-            'category' => 'required|string|max:100',
+            'category_id' => 'required|exists:categories,id',
             'name'     => 'required|string|max:255',
             'amount'   => 'required|numeric|min:0.01',
         ]);

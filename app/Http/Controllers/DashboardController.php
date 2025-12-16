@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Http\Controllers\Controller;
 use App\Models\FastRecord;
 use App\Models\Tabungan;
@@ -16,7 +17,7 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         $userId    = Auth::id();
-
+        $categories = Category::where('user_id', $userId)->get();
         // default bulan = bulan sekarang (YYYY-MM)
         $nowYm = Carbon::now()->format('Y-m');
 
@@ -141,7 +142,6 @@ class DashboardController extends Controller
                     'expense_percent' => $expensePercent,
                 ];
             });
-
         } else {
             // Jika tabel fast_records belum ada
             $saldoIncome = $saldoExpense = $balance = $monthlyExpense = $monthlyIncome = 0;
@@ -178,7 +178,8 @@ class DashboardController extends Controller
             'incomeMonthLabel',
             'availableMonths',
             'lastExpenseTemplates',
-            'lastIncomeTemplates'
+            'lastIncomeTemplates',
+            'categories'
         ));
     }
 }
