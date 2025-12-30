@@ -17,15 +17,14 @@
 
         <!-- Progress Circle -->
         @php
-            $total = ($tabungan->setoran_awal ?? 0) + $tabungan->total_setoran;
-            $progress = $tabungan->target > 0 ? min(($total / $tabungan->target) * 100, 100) : 0;
+            $progress = $tabungan->progress;
         @endphp
 
         <div class="progress-card">
             <div class="progress-circle" style="--value: {{ $progress }}%">
                 <div class="inner">
                     <h3>{{ round($progress) }}%</h3>
-                    <p>Rp {{ number_format($total, 0, ',', '.') }}</p>
+                    <p>Rp {{ number_format($tabungan->total_terkumpul, 0, ',', '.') }}</p>
                 </div>
             </div>
 

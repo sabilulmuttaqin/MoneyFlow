@@ -33,10 +33,7 @@
     <div class="tabungan-grid">
         @foreach ($tabungan as $item)
             @php
-                $totalSekarang = ($item->setoran_awal ?? 0) + $item->total_setoran;
-                $progress = $item->target > 0
-                    ? min(($totalSekarang / $item->target) * 100, 100)
-                    : 0;
+                $progress = $item->progress;
             @endphp
 
             {{-- CARD --}}
@@ -79,7 +76,7 @@
 
                     <p class="sekang">
                         Tabungan sekarang:
-                        Rp {{ number_format($totalSekarang, 0, ',', '.') }}
+                        Rp {{ number_format($item->total_terkumpul, 0, ',', '.') }}
                     </p>
 
                     <div class="progress-section">
