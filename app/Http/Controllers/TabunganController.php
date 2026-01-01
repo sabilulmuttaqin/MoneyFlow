@@ -29,7 +29,6 @@ class TabunganController extends Controller
             'nama' => $request->nama,
             'target' => $request->target,
             'setoran_awal' => $request->setoran_awal,
-            'total_setoran' => 0,
             'tenggat' => $request->tenggat
         ]);
 

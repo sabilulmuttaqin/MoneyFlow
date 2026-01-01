@@ -156,15 +156,12 @@
                         <div class="tabungan-list">
                             @foreach ($tabunganList as $tab)
                                 @php
-                                    // SESUAIKAN dengan nama kolom di tabel tabungan kamu
-                                    $nama = $tab->nama_tabungan ?? ($tab->nama ?? ($tab->name ?? 'Tabungan'));
-                                    $target = $tab->target_nominal ?? ($tab->target ?? ($tab->target_amount ?? 0));
-                                    $saldo = $tab->saldo_sekarang ?? ($tab->saldo ?? ($tab->current_amount ?? 0));
+                                    $nama   = $tab->nama;
+                                    $target = $tab->target ?? 0;
+                                    $saldo  = $tab->total_terkumpul ?? 0;
 
                                     $percent = $target > 0 ? round(($saldo / $target) * 100) : 0;
-                                    if ($percent > 100) {
-                                        $percent = 100;
-                                    }
+                                    $percent = min($percent, 100);
                                 @endphp
                                 <div class="tabungan-item">
                                     <div class="tab-title">{{ $nama }}</div>

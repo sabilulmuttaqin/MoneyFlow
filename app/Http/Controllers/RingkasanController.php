@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Anggaran;
+use App\Models\Category;
+use App\Models\FastRecord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -10,133 +12,221 @@ use Carbon\Carbon;
 class RingkasanController extends Controller
 {
 
-
 public function ringkasanBulanan(Request $request)
 {
-    $anggaran = Anggaran::where('user_id', Auth::id())->first();
+    $userId = Auth::id();
 
-    // 1) Ambil bulan terpilih dari query (?bulan=YYYY-MM)
-    //    Kalau kosong, default bulan sekarang
-    $selectedMonth = $request->query('bulan', Carbon::now()->format('Y-m'));
+    // ===== BULAN AKTIF =====
+    $monthValue = $request->query('bulan', now()->format('Y-m'));
+    $monthDate  = Carbon::createFromFormat('Y-m', $monthValue);
 
-    // 2) Parse jadi tanggal awal bulan (untuk label & nanti filter transaksi)
-    $selectedDate = Carbon::createFromFormat('Y-m', $selectedMonth)->startOfMonth();
+    $start = $monthDate->copy()->startOfMonth();
+    $end   = $monthDate->copy()->endOfMonth();
 
-    // Data default
+    // ===== AMBIL ANGGARAN =====
+    $anggaran = Anggaran::where('user_id', $userId)->latest()->first();
+
+    $anggaranKebutuhan = (int) optional($anggaran)->kebutuhan_pokok ?? 0;
+    $anggaranKeinginan = (int) optional($anggaran)->keinginan ?? 0;
+    $anggaranTabungan  = (int) optional($anggaran)->tabungan ?? 0;
+
+    $totalAnggaran = $anggaranKebutuhan + $anggaranKeinginan + $anggaranTabungan;
+
+    // ===== TERPAKAI PER JENIS =====
+    $terpakaiKebutuhan = FastRecord::where('user_id', $userId)
+        ->where('type', 'expense')
+        ->whereBetween('created_at', [$start, $end])
+        ->whereHas('category', fn ($q) => $q->where('status', 'kebutuhan pokok'))
+        ->sum('amount');
+
+    $terpakaiKeinginan = FastRecord::where('user_id', $userId)
+        ->where('type', 'expense')
+        ->whereBetween('created_at', [$start, $end])
+        ->whereHas('category', fn ($q) => $q->where('status', 'keinginan'))
+        ->sum('amount');
+
+    $terpakaiTabungan = FastRecord::where('user_id', $userId)
+        ->where('type', 'expense')
+        ->whereBetween('created_at', [$start, $end])
+        ->whereHas('category', fn ($q) => $q->where('status', 'tabungan'))
+        ->sum('amount');
+
+    // ===== TOTAL PEMASUKAN & PENGELUARAN =====
+    $totalPemasukan = FastRecord::where('user_id', $userId)
+        ->where('type', 'income')
+        ->whereBetween('created_at', [$start, $end])
+        ->sum('amount');
+
+    $totalPengeluaran = FastRecord::where('user_id', $userId)
+        ->where('type', 'expense')
+        ->whereBetween('created_at', [$start, $end])
+        ->sum('amount');
+
+    $sisaSaldo = $totalPemasukan - $totalPengeluaran;
+
+    // ===== PERSENTASE DONUT =====
+    $persentasePokok = $totalAnggaran > 0
+        ? round(($anggaranKebutuhan / $totalAnggaran) * 100)
+        : 0;
+
+    $persentaseKeinginan = $totalAnggaran > 0
+        ? round(($anggaranKeinginan / $totalAnggaran) * 100)
+        : 0;
+
+    $persentaseTabungan = max(0, 100 - $persentasePokok - $persentaseKeinginan);
+
+    // ===== DATA VIEW =====
     $dataRingkasan = [
-        'persentase_pokok' => 0,
-        'persentase_keinginan' => 0,
-        'persentase_tabungan' => 0,
-        'nominal_pokok' => 0,
-        'nominal_keinginan' => 0,
-        'nominal_tabungan' => 0,
-        'total_anggaran' => 0,
-        'pengeluaran_riil' => 'x.xxx.xxx',
-        'tabungan_riil' => 'x.xxx.xxx',
-        'sisa_saldo' => 'x.xxx.xxx',
+        'bulan_tahun' => $monthDate->translatedFormat('F Y'),
 
-        // 3) Ini yang dipakai tombol dropdown
-        'bulan_tahun' => $selectedDate->translatedFormat('F Y'),
+        'anggaran_kebutuhan' => $anggaranKebutuhan,
+        'terpakai_kebutuhan' => $terpakaiKebutuhan,
+
+        'anggaran_keinginan' => $anggaranKeinginan,
+        'terpakai_keinginan' => $terpakaiKeinginan,
+
+        'anggaran_tabungan' => $anggaranTabungan,
+        'terpakai_tabungan' => $terpakaiTabungan,
+
+        'total_pemasukan' => $totalPemasukan,
+        'total_pengeluaran' => $totalPengeluaran,
+        'sisa_saldo' => $sisaSaldo,
+
+        'persentase_pokok' => $persentasePokok,
+        'persentase_keinginan' => $persentaseKeinginan,
+        'persentase_tabungan' => $persentaseTabungan,
     ];
 
-    if ($anggaran) {
-        $total_anggaran = $anggaran->kebutuhan_pokok + $anggaran->keinginan + $anggaran->tabungan;
+    // ===== DROPDOWN BULAN =====
+    $availableMonths = collect(range(0, 11))->map(fn ($i) => [
+        'value' => now()->subMonths($i)->format('Y-m'),
+        'label' => now()->subMonths($i)->translatedFormat('F Y'),
+    ])->reverse()->values();
 
-        if ($total_anggaran > 0) {
-            $dataRingkasan['persentase_pokok'] = round(($anggaran->kebutuhan_pokok / $total_anggaran) * 100);
-            $dataRingkasan['persentase_keinginan'] = round(($anggaran->keinginan / $total_anggaran) * 100);
-            $persen_tabungan = 100 - $dataRingkasan['persentase_pokok'] - $dataRingkasan['persentase_keinginan'];
-            $dataRingkasan['persentase_tabungan'] = max(0, $persen_tabungan);
-        }
-
-        $dataRingkasan['nominal_pokok'] = $anggaran->kebutuhan_pokok;
-        $dataRingkasan['nominal_keinginan'] = $anggaran->keinginan;
-        $dataRingkasan['nominal_tabungan'] = $anggaran->tabungan;
-        $dataRingkasan['total_anggaran'] = $total_anggaran;
-    }
-
-    // 4) opsi bulan (12 bulan terakhir)
-    $availableMonths = collect(range(0, 11))->map(function ($i) {
-        $date = Carbon::now()->subMonths($i)->startOfMonth();
-        return [
-            'value' => $date->format('Y-m'),
-            'label' => $date->translatedFormat('F Y'),
-        ];
-    })->reverse()->values();
-
-    return view('featureview.ringkasan.index', compact('dataRingkasan', 'availableMonths', 'selectedMonth'));
+    return view('featureview.ringkasan.index', compact(
+        'dataRingkasan',
+        'availableMonths',
+        'monthValue'
+    ));
 }
 
+private function getWeekRange(Carbon $month, int $week)
+{
+    $start = match ($week) {
+        1 => $month->copy()->startOfMonth(),
+        2 => $month->copy()->startOfMonth()->addDays(7),
+        3 => $month->copy()->startOfMonth()->addDays(14),
+        4 => $month->copy()->startOfMonth()->addDays(21),
+    };
 
+    $end = match ($week) {
+        1,2,3 => $start->copy()->addDays(6),
+        4 => $month->copy()->endOfMonth(),
+    };
 
-    public function detailMingguan(Request $request, int $minggu)
-    {
-        $selectedMonth = $request->query('bulan', Carbon::now()->format('Y-m'));
-        $selectedDate  = Carbon::createFromFormat('Y-m', $selectedMonth)->startOfMonth();
+    return [$start, $end];
+}
 
-        $bulanLabel = $selectedDate->translatedFormat('F Y');
+private function availableMonths()
+{
+    return collect(range(0, 11))->map(fn ($i) => [
+        'value' => now()->subMonths($i)->format('Y-m'),
+        'label' => now()->subMonths($i)->translatedFormat('F Y'),
+    ])->reverse()->values();
+}
 
-        // ambil anggaran user
-        $anggaran = Anggaran::where('user_id', Auth::id())->first();
+public function detailMingguan(Request $request, $minggu)
+{
+    $userId = Auth::id();
 
-        $kebutuhan = (int) optional($anggaran)->kebutuhan_pokok ?? 0;
-        $keinginan = (int) optional($anggaran)->keinginan ?? 0;
-        $tabungan  = (int) optional($anggaran)->tabungan ?? 0;
+    /* =========================
+     * 1. BULAN AKTIF
+     * ========================= */
+    $selectedMonth = $request->get('bulan', now()->format('Y-m'));
+    $monthDate     = Carbon::createFromFormat('Y-m', $selectedMonth);
 
-        // budget per minggu (dibagi 4)
-        $makananWeek   = (int) round($kebutuhan / 4);
-        $hiburanWeek   = (int) round($keinginan / 4);
-        $transportWeek = (int) round($tabungan / 4);
+    $bulanLabel = $monthDate->translatedFormat('F Y');
 
-        $totalWeek = $makananWeek + $hiburanWeek + $transportWeek;
+    /* =========================
+     * 2. RANGE MINGGU
+     * ========================= */
+    $startOfMonth = $monthDate->copy()->startOfMonth();
+    $startWeek    = $startOfMonth->copy()->addWeeks($minggu - 1);
+    $endWeek      = $startWeek->copy()->addDays(6)->endOfDay();
 
-        // percent (biar progress bar ada angka)
-        $pct = function(int $val) use ($totalWeek) {
-            return $totalWeek > 0 ? (int) round(($val / $totalWeek) * 100) : 0;
-        };
+    /* =========================
+     * 3. STATUS KATEGORI (FIXED)
+     * ========================= */
+    $statuses = ['kebutuhan pokok', 'keinginan', 'tabungan'];
 
-        // Cards: sesuai UI gambar
-        $cards = collect([
-            [
-                'kategori' => 'Makanan',
-                'total' => $makananWeek,
-                'percent' => $pct($makananWeek),
-                'color' => '#6B78FF', // ungu-biru
-            ],
-            [
-                'kategori' => 'Transport',
-                'total' => $transportWeek,
-                'percent' => $pct($transportWeek),
-                'color' => '#D6A133', // kuning
-            ],
-            [
-                'kategori' => 'Hiburan',
-                'total' => $hiburanWeek,
-                'percent' => $pct($hiburanWeek),
-                'color' => '#FF6B6B', // merah
-            ],
-        ])->filter(fn($c) => $c['total'] > 0)->values();
+    /* =========================
+     * 4. TOTAL ANGGARAN BULANAN
+     * ========================= */
+    $anggaranBulanan = Category::where('user_id', $userId)
+        ->whereIn('status', $statuses)
+        ->selectRaw('status, SUM(budget) as total')
+        ->groupBy('status')
+        ->pluck('total', 'status');
 
-        // dropdown bulan (sama seperti ringkasan)
-        $availableMonths = collect(range(0, 11))->map(function ($i) {
-            $date = Carbon::now()->subMonths($i)->startOfMonth();
-            return [
-                'value' => $date->format('Y-m'),
-                'label' => $date->translatedFormat('F Y'),
-            ];
-        })->reverse()->values();
+    /* =========================
+     * 5. BAGI ANGGARAN PER MINGGU
+     * ========================= */
+    $anggaranMingguan = collect($statuses)->mapWithKeys(function ($status) use ($anggaranBulanan) {
+        return [$status => ($anggaranBulanan[$status] ?? 0) / 4];
+    });
 
-        // Toast: karena gak ada transaksi, kita tampilkan info budget (bukan pengeluaran)
-        $toast = "Anggaran Minggu ini berdasarkan pembagian 1 bulan / 4 minggu";
+    /* =========================
+     * 6. PENGELUARAN MINGGUAN
+     * ========================= */
+    $pengeluaran = FastRecord::where('user_id', $userId)
+        ->where('type', 'expense')
+        ->whereBetween('created_at', [$startWeek, $endWeek])
+        ->whereHas('category', function ($q) use ($statuses) {
+            $q->whereIn('status', $statuses);
+        })
+        ->with('category')
+        ->get()
+        ->groupBy(fn ($r) => $r->category->status);
 
-        return view('featureview.ringkasan.detail_minggu', compact(
-            'minggu',
-            'selectedMonth',
-            'bulanLabel',
-            'availableMonths',
-            'cards',
-            'toast'
-        ));
-    }
+    /* =========================
+     * 7. BUILD CARD (ANTI ERROR)
+     * ========================= */
+    $cards = collect($statuses)->map(function ($status) use ($anggaranMingguan, $pengeluaran) {
+
+        $budget = $anggaranMingguan[$status] ?? 0;
+        $used   = $pengeluaran->get($status, collect())->sum('amount');
+
+        return [
+            'kategori' => ucfirst($status),
+            'total'    => $used,
+            'percent'  => $budget > 0
+                ? min(100, round(($used / $budget) * 100))
+                : 0,
+            'color'    => match ($status) {
+                'kebutuhan pokok' => '#6B78FF',
+                'keinginan'       => '#F59E0B',
+                'tabungan'        => '#10B981',
+                default           => '#9CA3AF',
+            }
+        ];
+    });
+
+    /* =========================
+     * 8. DROPDOWN BULAN
+     * ========================= */
+    $availableMonths = collect(range(0, 11))->map(fn ($i) => [
+        'value' => now()->subMonths($i)->format('Y-m'),
+        'label' => now()->subMonths($i)->translatedFormat('F Y'),
+    ])->reverse()->values();
+
+    return view('featureview.ringkasan.detail_minggu', compact(
+        'cards',
+        'minggu',
+        'bulanLabel',
+        'availableMonths',
+        'selectedMonth'
+    ));
+}
+
 
 }

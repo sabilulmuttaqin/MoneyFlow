@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Anggaran;
+use App\Models\FastRecord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
@@ -13,72 +14,90 @@ class CategoryController extends Controller
 {
     // INDEX
     public function index(Request $request)
-    {
-        $userId = Auth::id();
-        $categories = Category::where('user_id', $userId)->get();
+{
+    $userId = Auth::id();
 
-        $nowYm = Carbon::now()->format('Y-m');
-        $saldoMonthValue   = $request->query('saldo_month', $nowYm);
-        $expenseMonthValue = $request->query('expense_month', $saldoMonthValue);
-        $incomeMonthValue  = $request->query('income_month', $saldoMonthValue);
+    // ===============================
+    // BULAN AKTIF
+    // ===============================
+    $monthValue = $request->query('bulan', now()->format('Y-m'));
+    $monthDate  = Carbon::createFromFormat('Y-m', $monthValue);
 
-        $parseMonth = fn(string $value) => Carbon::createFromFormat('Y-m', $value)->startOfMonth();
+    $start = $monthDate->copy()->startOfMonth();
+    $end   = $monthDate->copy()->endOfMonth();
 
-        $saldoMonth   = $parseMonth($saldoMonthValue);
-        $expenseMonth = $parseMonth($expenseMonthValue);
-        $incomeMonth  = $parseMonth($incomeMonthValue);
+    // ===============================
+    // TRANSAKSI BULANAN (SAMA DENGAN CATAT CEPAT)
+    // ===============================
+    $monthlyIncome = FastRecord::where('user_id', $userId)
+        ->where('type', 'income')
+        ->whereBetween('created_at', [$start, $end])
+        ->sum('amount');
 
-        $balance = $monthlyExpense = $monthlyIncome = 0;
+    $monthlyExpense = FastRecord::where('user_id', $userId)
+        ->where('type', 'expense')
+        ->whereBetween('created_at', [$start, $end])
+        ->sum('amount');
 
-        if (Schema::hasTable('fast_records')) {
-            $baseQuery = \App\Models\FastRecord::where('user_id', $userId);
+    $balance = $monthlyIncome - $monthlyExpense;
 
-            $saldoIncome = (clone $baseQuery)
-                ->where('type', 'income')
-                ->whereYear('created_at', $saldoMonth->year)
-                ->whereMonth('created_at', $saldoMonth->month)
-                ->sum('amount');
+    // ===============================
+    // KATEGORI + TERPAKAI
+    // ===============================
+    $categories = Category::where('user_id', $userId)->get();
 
-            $saldoExpense = (clone $baseQuery)
-                ->where('type', 'expense')
-                ->whereYear('created_at', $saldoMonth->year)
-                ->whereMonth('created_at', $saldoMonth->month)
-                ->sum('amount');
+    $categories->each(function ($category) use ($userId, $start, $end) {
 
-            $balance = $saldoIncome - $saldoExpense;
+        // hanya hitung pengeluaran
+        $terpakai = FastRecord::where('user_id', $userId)
+            ->where('type', 'expense')
+            ->where('category_id', $category->id)
+            ->whereBetween('created_at', [$start, $end])
+            ->sum('amount');
 
-            $monthlyExpense = (clone $baseQuery)
-                ->where('type', 'expense')
-                ->whereYear('created_at', $expenseMonth->year)
-                ->whereMonth('created_at', $expenseMonth->month)
-                ->sum('amount');
+        // inject runtime (BUKAN DB)
+        $category->used = $terpakai;
 
-            $monthlyIncome = (clone $baseQuery)
-                ->where('type', 'income')
-                ->whereYear('created_at', $incomeMonth->year)
-                ->whereMonth('created_at', $incomeMonth->month)
-                ->sum('amount');
-        }
+        $category->progress = $category->budget > 0
+            ? min(100, round(($terpakai / $category->budget) * 100))
+            : 0;
+    });
 
-        $availableMonths = collect(range(0, 11))->map(fn($i) => [
-            'value' => Carbon::now()->subMonths($i)->format('Y-m'),
-            'label' => Carbon::now()->subMonths($i)->translatedFormat('F Y')
-        ])->reverse()->values();
+    // ===============================
+    // DROPDOWN BULAN
+    // ===============================
+    $availableMonths = collect(range(0, 11))->map(fn ($i) => [
+        'value' => now()->subMonths($i)->format('Y-m'),
+        'label' => now()->subMonths($i)->translatedFormat('F Y'),
+    ])->reverse()->values();
 
-        return view('featureview.kategori.kategori', compact(
-            'categories',
-            'balance',
-            'monthlyExpense',
-            'monthlyIncome',
-            'saldoMonthValue',
-            'expenseMonthValue',
-            'incomeMonthValue',
-            'availableMonths',
-            'saldoMonth',
-            'expenseMonth',
-            'incomeMonth'
-        ));
-    }
+    // ===============================
+    // VARIABEL UNTUK FE (WAJIB ADA)
+    // ===============================
+    $saldoMonthValue   = $monthValue;
+    $expenseMonthValue = $monthValue;
+    $incomeMonthValue  = $monthValue;
+
+    $saldoMonth   = $monthDate;
+    $expenseMonth = $monthDate;
+    $incomeMonth  = $monthDate;
+
+    return view('featureview.kategori.kategori', compact(
+        'categories',
+        'balance',
+        'monthlyExpense',
+        'monthlyIncome',
+        'availableMonths',
+        'saldoMonthValue',
+        'expenseMonthValue',
+        'incomeMonthValue',
+        'saldoMonth',
+        'expenseMonth',
+        'incomeMonth',
+        'monthValue'
+    ));
+}
+
 
     // CREATE
     public function create()
