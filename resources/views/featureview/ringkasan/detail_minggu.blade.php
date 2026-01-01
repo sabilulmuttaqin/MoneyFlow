@@ -3,10 +3,10 @@
 @section('content')
 <style>
     .week-page{
-        background:#f2f2f2;
+        background: transparent;
         min-height: calc(100vh - 70px);
-        padding: 28px 36px 40px;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+        padding: 0;
+        font-family: "Aspekta", sans-serif;
     }
 
     .week-top{
@@ -38,7 +38,7 @@
     .back-btn:hover{ background: rgba(0,0,0,.06); }
 
     .week-title{
-        font-size: 44px;
+        font-size: 24px;
         font-weight: 700;
         margin: 0;
         color:#111;
@@ -50,82 +50,85 @@
     .week-month-toggle{
         display:flex;
         align-items:center;
-        gap: 14px;
-        padding: 16px 26px;
-        border-radius: 999px;
-        border: none;
-        background: #d9d9d9;
+        gap: 8px;
+        padding: 10px 16px;
+        border-radius: 10px;
+        border: 1px solid #e2e8f0;
+        background: #ffffff;
         cursor:pointer;
-        font-size: 22px;
-        font-weight: 600;
-        color:#111;
-        min-width: 340px;
+        font-size: 13px;
+        font-weight: 500;
+        color:#475569;
+        min-width: auto;
         justify-content: center;
     }
-    .week-month-toggle:hover{ filter: brightness(.98); }
-    .cal-ic{ font-size: 22px; }
-    .chev{ font-size: 18px; margin-left: 4px; }
+    .week-month-toggle:hover{ border-color: #cbd5e1; }
+    .cal-ic{ font-size: 14px; }
+    .chev{ font-size: 12px; margin-left: 2px; }
 
     .week-month-list{
         position:absolute;
         right:0;
-        top: calc(100% + 10px);
-        background:#e5e5e5;
-        border-radius: 20px;
-        padding: 10px 14px;
-        width: 340px;
-        box-shadow: 0 18px 40px rgba(0,0,0,.18);
+        top: calc(100% + 8px);
+        background:#ffffff;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        padding: 8px;
+        width: 180px;
+        box-shadow: 0 4px 16px rgba(0,0,0,.08);
         display:none;
-        max-height: 240px;
+        max-height: 200px;
         overflow:auto;
         z-index: 50;
     }
     .week-month-list.show{ display:block; }
     .week-month-item{
         display:block;
-        padding: 10px 8px;
-        border-radius: 14px;
+        padding: 8px 12px;
+        border-radius: 8px;
         text-decoration:none;
-        color:#111;
+        color:#475569;
         font-weight: 500;
-        text-align:center;
+        font-size: 13px;
+        text-align:left;
     }
-    .week-month-item:hover{ background: rgba(0,0,0,.06); }
-    .week-month-item.active{ font-weight: 800; text-decoration: underline; }
+    .week-month-item:hover{ background: #f1f5f9; }
+    .week-month-item.active{ font-weight: 600; color: #5b8def; background: #f1f5f9; }
 
     /* cards */
     .week-cards{
-        max-width: 880px;
-        margin: 0 auto;
+        max-width: 100%;
+        margin: 0;
         display:grid;
         grid-template-columns: 1fr 1fr;
-        gap: 34px 58px;
-        padding-top: 10px;
+        gap: 16px;
+        padding-top: 0;
     }
 
     .week-card{
         background: #ffffff;
-        border-radius: 10px;
-        padding: 18px 22px 16px;
-        box-shadow: 0 10px 24px rgba(0,0,0,.06);
-        min-height: 120px;
+        border-radius: 16px;
+        padding: 16px 20px;
+        box-shadow: none;
+        border: 1px solid #f1f5f9;
+        min-height: auto;
         display:flex;
         flex-direction: column;
-        justify-content: space-between;
+        gap: 12px;
     }
 
     .week-card h3{
         margin: 0;
-        font-size: 26px;
-        font-weight: 400;
-        color:#111;
+        font-size: 14px;
+        font-weight: 500;
+        color:#64748b;
     }
 
     .week-amount{
-        font-size: 22px;
-        font-weight: 500;
-        margin-top: 12px;
-        color:#111;
+        font-size: 18px;
+        font-weight: 600;
+        margin-top: 0;
+        color:#0f172a;
     }
 
     .progress-wrap{
@@ -160,7 +163,7 @@
         font-size: 18px;
         max-width: 520px;
         width: calc(100% - 40px);
-        box-shadow: 0 18px 40px rgba(0,0,0,.2);
+        box-shadow: 0 4px 16px rgba(0,0,0,.1);
         text-align: left;
     }
 

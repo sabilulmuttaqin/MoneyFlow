@@ -1,3 +1,15 @@
+/* FONT CUSTOM */
+@font-face {
+    font-family: "Aspekta";
+    src: url("/fonts/Aspekta-450.ttf") format("truetype");
+    font-weight: 450;
+    font-style: normal;
+}
+
+* {
+    font-family: "Aspekta", sans-serif;
+}
+
 /*-----SALDO, PEMASUKAN, PENGELUARAN-----*/
 
 /* grid tetap - 3 kolom dengan proporsi yang tepat */
@@ -384,12 +396,12 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 480px;
+    width: 500px;
     max-width: 90%;
-    background: #ffffff;
-    border-radius: 20px;
+    background: linear-gradient(180deg, #d0e3ff 0%, #e8f1ff 50%, #f0f6ff 100%);
+    border-radius: 24px;
     padding: 28px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
     display: none;
     z-index: 1000;
     animation: slideUp 0.3s ease;

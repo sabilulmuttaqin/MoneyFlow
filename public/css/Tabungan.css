@@ -1,10 +1,19 @@
+/* FONT CUSTOM */
+@font-face {
+    font-family: "Aspekta";
+    src: url("/fonts/Aspekta-450.ttf") format("truetype");
+    font-weight: 450;
+    font-style: normal;
+}
+
 /* =========================
    PAGE & HEADER
 ========================= */
 .page-wrapper {
-    background-color: #f8f9fc;
+    background-color: transparent;
     min-height: calc(100vh - 72px);
-    padding: 20px;
+    padding: 0;
+    font-family: "Aspekta", sans-serif;
 }
 
 .header-section {
@@ -12,6 +21,13 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 24px;
+}
+
+.header-section h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
 }
 
 .btn-tambah {
@@ -50,17 +66,29 @@
 .card-tabungan {
     position: relative;
     background: #ffffff;
-    border-radius: 14px;
+    border-radius: 16px;
     padding: 18px 20px;
     min-height: 155px;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    border: 1px solid #f1f5f9;
     cursor: pointer;
     transition: all 0.25s ease;
 }
 
 .card-tabungan:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+    border-color: #e2e8f0;
+    background: #fafbfc;
+}
+
+/* Remove link styling */
+.card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.card-link:hover {
+    text-decoration: none;
+    color: inherit;
 }
 
 /* =========================
@@ -85,34 +113,141 @@
 }
 
 /* =========================
-   ACTION ICONS
+   ACTION BUTTONS
 ========================= */
 .aksi-icons {
     position: absolute;
-    top: 18px;
-    right: 18px;
+    top: 20px;
+    right: 20px;
     display: flex;
-    gap: 10px;
-    z-index: 3;
+    gap: 8px;
+    z-index: 10;
 }
 
-
-.aksi-icons button {
-    background: none;
+.btn-edit {
+    background: #5b8def;
     border: none;
+    color: #ffffff;
+    padding: 6px 10px;
     cursor: pointer;
-    font-size: 16px;
-    opacity: 0.7;
-    transition: opacity 0.2s ease;
+    border-radius: 6px;
+    font-size: 13px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.aksi-icons button:hover {
-    opacity: 1;
-    background: #f0f4ff;
+.btn-edit:hover {
+    background: #4c7ce5;
+    transform: scale(1.05);
 }
 
 .btn-delete {
-    color: #ff4d4f;
+    background: #fee2e2;
+    border: none;
+    color: #dc2626;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-delete:hover {
+    background: #fecaca;
+    transform: scale(1.05);
+}
+
+/* =========================
+   Delete Modal Styles (Category Match)
+========================= */
+.delete-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease;
+}
+
+.delete-modal-overlay.show {
+    display: flex;
+}
+
+.delete-modal-box {
+    width: 420px;
+    max-width: 90%;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    padding: 28px;
+    text-align: center;
+    animation: slideUp 0.3s ease;
+}
+
+.delete-modal-box .modal-header {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #0f172a;
+}
+
+.delete-modal-box .modal-body {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+.delete-modal-box .modal-footer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.delete-modal-box .btn-delete-confirm {
+    background-color: #5b8def; /* Yes is Blue */
+    color: #ffffff;
+    border: none;
+    padding: 11px 28px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    flex: 1;
+    transition: all 0.2s ease;
+}
+
+.delete-modal-box .btn-delete-confirm:hover {
+    background-color: #4c7ce5;
+    transform: translateY(-1px);
+}
+
+.delete-modal-box .btn-cancel-delete {
+    background-color: #ef4444; /* No is Red */
+    color: #ffffff;
+    border: none;
+    padding: 11px 28px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    flex: 1;
+    transition: all 0.2s ease;
+}
+
+.delete-modal-box .btn-cancel-delete:hover {
+    background-color: #dc2626;
+    transform: translateY(-1px);
 }
 
 /* =========================
@@ -130,42 +265,45 @@
 ========================= */
 .progress-section {
     width: 100%;
-    height: 10px;
-    background: #eef0ff;
-    border-radius: 10px;
-    margin-top: 12px;
+    height: 28px;
+    background: #e8eaff;
+    border-radius: 8px;
+    margin-top: 16px;
     overflow: hidden;
 }
 
 .progress-bar {
     height: 100%;
-    border-radius: 10px;
+    border-radius: 8px;
     transition: width 0.4s ease;
+    display: flex;
+    align-items: center;
+    min-width: fit-content;
 }
 
 /* Warna progress beda tiap card */
 .card-tabungan:nth-child(4n + 1) .progress-bar {
-    background: #6c63ff;
+    background: #8b7eff;
 }
 
 .card-tabungan:nth-child(4n + 2) .progress-bar {
-    background: #ffb020;
+    background: #d4a84b;
 }
 
 .card-tabungan:nth-child(4n + 3) .progress-bar {
-    background: #ff5c5c;
+    background: #f87171;
 }
 
 .card-tabungan:nth-child(4n + 4) .progress-bar {
-    background: #2ecc71;
+    background: #4ade80;
 }
 
 .progress-label {
-    margin-top: 6px;
-    display: block;
-    text-align: right;
-    font-size: 13px;
+    padding: 0 10px;
+    font-size: 12px;
     font-weight: 600;
+    color: #ffffff;
+    white-space: nowrap;
 }
 
 /* =========================
@@ -217,38 +355,153 @@
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.45);
+    background: rgba(15, 23, 42, 0.5);
     justify-content: center;
     align-items: center;
+    z-index: 50;
+}
+
+.modal.show {
+    display: flex;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .modal-content {
-    background: linear-gradient(180deg, #d8e6ff, #ecf3fe);
-    padding: 25px;
-    border-radius: 14px;
-    width: 360px;
+    background: linear-gradient(180deg, #d0e3ff 0%, #e8f1ff 50%, #f0f6ff 100%);
+    padding: 28px;
+    border-radius: 24px;
+    width: 500px;
+    max-width: 95vw;
+    animation: modalSlideUp 0.3s ease;
+}
+
+@keyframes modalSlideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-content h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 20px 0;
+}
+
+.modal-content label {
+    font-size: 13px;
+    color: #475569;
+    margin-bottom: 6px;
+    display: block;
+    font-weight: 500;
 }
 
 .modal-content input {
     width: 100%;
-    padding: 8px;
+    padding: 12px 16px;
     margin-top: 6px;
-    margin-bottom: 12px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    font-size: 14px;
+    outline: none;
+    background: #ffffff;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.modal-content input:focus {
+    border-color: #5b8def;
+}
+
+.modal-content input::placeholder {
+    color: #94a3b8;
 }
 
 .btn-submit {
     width: 100%;
-    background: #3178ff;
+    background: #5b8def;
     color: white;
     border: none;
-    padding: 10px;
-    border-radius: 8px;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 8px;
+}
+
+.btn-submit:hover {
+    background: #4c7ce5;
 }
 
 .close-btn {
-    float: right;
+    position: absolute;
+    top: 20px;
+    right: 20px;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 24px;
+    color: #64748b;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    background: none;
+    border: none;
+    line-height: 1;
+}
+
+.close-btn:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+/* =========================
+   DELETE MODAL BUTTONS
+========================= */
+.btn-cancel {
+    padding: 10px 24px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    color: #64748b;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-cancel:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+.btn-delete-confirm {
+    padding: 10px 24px;
+    border-radius: 10px;
+    border: none;
+    background: #ef4444;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-delete-confirm:hover {
+    background: #dc2626;
 }

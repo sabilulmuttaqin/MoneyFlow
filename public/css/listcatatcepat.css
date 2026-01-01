@@ -1,7 +1,16 @@
+/* FONT CUSTOM */
+@font-face {
+    font-family: "Aspekta";
+    src: url("/fonts/Aspekta-450.ttf") format("truetype");
+    font-weight: 450;
+    font-style: normal;
+}
+
 /* Prevent body scroll */
 body {
     overflow-x: hidden;
     overflow-y: auto;
+    font-family: "Aspekta", sans-serif;
 }
 
 /* Page Header */
@@ -257,24 +266,42 @@ body {
     gap: 8px;
 }
 
-.action-btn {
-    background: none;
+.btn-edit {
+    background: #5b8def;
     border: none;
-    color: #94a3b8;
+    color: #ffffff;
+    padding: 6px 10px;
     cursor: pointer;
-    padding: 8px;
-    border-radius: 8px;
-    transition: all 0.2s;
+    border-radius: 6px;
+    font-size: 13px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.action-btn.edit:hover {
-    background: #dbeafe;
-    color: #2563eb;
+.btn-edit:hover {
+    background: #4c7ce5;
+    transform: scale(1.05);
 }
 
-.action-btn.delete:hover {
+.btn-delete-icon {
     background: #fee2e2;
+    border: none;
     color: #dc2626;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-delete-icon:hover {
+    background: #fecaca;
+    transform: scale(1.05);
 }
 
 /* Empty State */
@@ -330,7 +357,7 @@ body {
     width: 500px;
     max-width: 95vw;
     border-radius: 24px;
-    background: #ffffff;
+    background: linear-gradient(180deg, #d0e3ff 0%, #e8f1ff 50%, #f0f6ff 100%);
     padding: 28px 28px 24px;
     animation: slideUp 0.3s ease;
 }
@@ -455,66 +482,91 @@ body {
     transform: translateY(-1px);
 }
 
-/* DELETE MODAL */
-.delete-modal .modal {
-    max-width: 450px;
+/* DELETE MODAL - STANDARD CATEGORY STYLE */
+.delete-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeIn 0.2s ease;
 }
 
-.delete-modal-body {
-    padding: 24px 0;
-    text-align: center;
-}
-
-.delete-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #0f172a;
-    margin-bottom: 8px;
-}
-
-.delete-message {
-    color: #64748b;
-    font-size: 14px;
-    margin-bottom: 24px;
-}
-
-.delete-actions {
+.delete-modal-overlay.show {
     display: flex;
-    gap: 12px;
 }
 
-.btn-cancel {
-    flex: 1;
-    padding: 12px 20px;
-    background: #4f7cff;
-    color: white;
+.delete-modal-box {
+    width: 420px;
+    max-width: 90%;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    padding: 28px;
+    text-align: center;
+    animation: slideUp 0.3s ease;
+}
+
+.delete-modal-box .modal-header {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #0f172a;
+    display: block; /* Override default modal header */
+}
+
+.delete-modal-box .modal-body {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+.delete-modal-box .modal-footer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.delete-modal-box .btn-delete-confirm {
+    background-color: #5b8def; /* Yes is Blue */
+    color: #ffffff;
     border: none;
-    border-radius: 12px;
+    padding: 11px 28px;
+    border-radius: 10px;
+    cursor: pointer;
     font-weight: 600;
     font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.btn-cancel:hover {
-    background: #3d6ae8;
-}
-
-.btn-delete {
     flex: 1;
-    padding: 12px 20px;
-    background: #fc4c4c;
-    color: white;
+    transition: all 0.2s ease;
+}
+
+.delete-modal-box .btn-delete-confirm:hover {
+    background-color: #4c7ce5;
+    transform: translateY(-1px);
+}
+
+.delete-modal-box .btn-cancel-delete {
+    background-color: #ef4444; /* No is Red */
+    color: #ffffff;
     border: none;
-    border-radius: 12px;
+    padding: 11px 28px;
+    border-radius: 10px;
+    cursor: pointer;
     font-weight: 600;
     font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s;
+    flex: 1;
+    transition: all 0.2s ease;
 }
 
-.btn-delete:hover {
-    background: #dc2626;
+.delete-modal-box .btn-cancel-delete:hover {
+    background-color: #dc2626;
+    transform: translateY(-1px);
 }
 
 /* RESPONSIVE */

@@ -1,3 +1,15 @@
+/* FONT CUSTOM */
+@font-face {
+    font-family: "Aspekta";
+    src: url("/fonts/Aspekta-450.ttf") format("truetype");
+    font-weight: 450;
+    font-style: normal;
+}
+
+* {
+    font-family: "Aspekta", sans-serif;
+}
+
 .detail-header {
     display: flex;
     align-items: center;
@@ -96,12 +108,12 @@
 
 
 .modal-content {
-    background: #fff;
-    padding: 24px;
-    border-radius: 16px;
+    background: linear-gradient(180deg, #d0e3ff 0%, #e8f1ff 50%, #f0f6ff 100%);
+    padding: 28px;
+    border-radius: 24px;
     width: 100%;
-    max-width: 420px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    max-width: 500px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
     position: relative;
     animation: modalFade 0.25s ease;
 }
@@ -119,41 +131,87 @@
 
 .close-btn {
     position: absolute;
-    top: 14px;
-    right: 18px;
+    top: 20px;
+    right: 20px;
     font-size: 24px;
     cursor: pointer;
-    color: #555;
+    color: #64748b;
+    z-index: 10;
+    background: none;
+    border: none;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    line-height: 1;
 }
 
 .close-btn:hover {
-    color: #000;
+    background: #f1f5f9;
+    color: #0f172a;
 }
 
 /* Form */
 .modal-content form {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 16px;
+}
+
+.modal-content h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 8px 0;
+}
+
+.modal-content label {
+    font-size: 13px;
+    color: #475569;
+    display: block;
+    font-weight: 500;
+    margin-bottom: 6px;
 }
 
 .modal-content input {
-    padding: 10px 12px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    font-size: 14px;
+    outline: none;
+    background: #ffffff;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.modal-content input:focus {
+    border-color: #5b8def;
+}
+
+.modal-content input::placeholder {
+    color: #94a3b8;
 }
 
 .btn-submit {
-    padding: 10px;
-    border-radius: 10px;
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 12px;
     border: none;
-    background: #4f80ff;
+    background: #5b8def;
     color: #fff;
     cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    margin-top: 8px;
 }
 
 .btn-submit:hover {
-    background: #3a6ae0;
+    background: #4c7ce5;
 }
 
 /* SUCCESS MODAL */

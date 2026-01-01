@@ -1,7 +1,16 @@
+/* FONT CUSTOM */
+@font-face {
+    font-family: "Aspekta";
+    src: url("/fonts/Aspekta-450.ttf") format("truetype");
+    font-weight: 450;
+    font-style: normal;
+}
+
 /* Prevent body scroll */
 body {
     overflow-x: hidden;
     overflow-y: auto;
+    font-family: "Aspekta", sans-serif;
 }
 
 .page-wrapper {
@@ -478,8 +487,7 @@ body {
     width: 500px;
     max-width: 95vw;
     border-radius: 24px;
-    background: #ffffff;
-    /* background: linear-gradient(180deg, #D8E6FF 0%, #ECF3FE 47%, #D8E6FF 100%); */
+    background: linear-gradient(180deg, #d0e3ff 0%, #e8f1ff 50%, #f0f6ff 100%);
 
     padding: 28px 28px 24px;
 

@@ -2,6 +2,7 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('css/Tabungan.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 @endsection
 
 @section('content')
@@ -26,7 +27,7 @@
     {{-- HEADER --}}
     <div class="header-section">
         <h2>Tujuan Tabungan</h2>
-        <button class="btn-tambah" onclick="openModal()">+ Tambah Tujuan</button>
+        <button class="btn-tambah" onclick="openModal()">+ Tambah Tujuan Baru</button>
     </div>
 
     {{-- LIST TABUNGAN --}}
@@ -41,7 +42,7 @@
 
                 {{-- ICON AKSI --}}
                 <div class="aksi-icons">
-                    <button
+                    <button class="btn-edit"
                         type="button"
                         onclick="event.stopPropagation(); openEditModal(
                             '{{ $item->id }}',
@@ -49,16 +50,16 @@
                             '{{ $item->target }}',
                             '{{ $item->setoran_awal }}'
                         )">
-                        ✏️
+                        <i class="bi bi-pencil-fill"></i>
                     </button>
 
-                    <button
+                    <button class="btn-delete"
                         type="button"
                         onclick="event.stopPropagation(); openDeleteModal(
                             '{{ $item->id }}',
                             '{{ $item->nama }}'
                         )">
-                        🗑️
+                        <i class="bi bi-trash-fill"></i>
                     </button>
                 </div>
 
@@ -82,11 +83,10 @@
                     <div class="progress-section">
                         <div
                             class="progress-bar"
-                            style="width: {{ $progress }}%">
+                            style="width: {{ max($progress, 15) }}%">
+                            <span class="progress-label">{{ round($progress) }}%</span>
                         </div>
                     </div>
-
-                    <span class="progress-label">{{ round($progress) }}%</span>
 
                 </a>
             </div>

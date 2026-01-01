@@ -1,7 +1,7 @@
 <div class="modal" id="modalSetoran">
-    <div class="modal-content">
+    <div class="modal-content" style="position: relative;">
 
-        <span class="close-btn" onclick="closeSetorModal()">×</span>
+        <button type="button" class="close-btn" onclick="closeSetoranModal()">×</button>
 
         <h3>Tambah Setoran</h3>
 
@@ -13,7 +13,7 @@
                 type="number"
                 name="jumlah"
                 min="1000"
-                placeholder="Minimal 1.000"
+                placeholder="Minimal Rp 1.000"
                 required
             >
 

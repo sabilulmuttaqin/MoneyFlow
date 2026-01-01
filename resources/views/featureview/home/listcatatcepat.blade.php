@@ -2,6 +2,7 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/listcatatcepat.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 @endsection
 
 @section('content')
@@ -125,23 +126,15 @@
                                 </td>
                                 <td>
                                     <div class="action-buttons">
-                                        <button type="button" class="action-btn edit"
+                                        <button type="button" class="btn-edit"
                                             onclick="openEditModal({{ $transaction->id }}, '{{ $transaction->type }}', '{{ $transaction->category_id }}', '{{ $transaction->name }}', {{ $transaction->amount }})"
                                             title="Edit">
-                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2">
-                                                <path
-                                                    d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
-                                            </svg>
+                                            <i class="bi bi-pencil-fill"></i>
                                         </button>
-                                        <button type="button" class="action-btn delete"
+                                        <button type="button" class="btn-delete-icon"
                                             onclick="openDeleteModal({{ $transaction->id }}, '{{ $transaction->name }}')"
                                             title="Hapus">
-                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2">
-                                                <path
-                                                    d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6" />
-                                            </svg>
+                                            <i class="bi bi-trash-fill"></i>
                                         </button>
                                     </div>
                                 </td>
@@ -200,24 +193,21 @@
     </div>
 
     {{-- MODAL DELETE CONFIRMATION --}}
-    <div class="modal-overlay delete-modal" id="deleteModal">
-        <div class="modal">
-            <div class="modal-header">
-                <div class="modal-title">Delete Transaksi</div>
-                <button class="modal-close" onclick="closeDeleteModal()">&times;</button>
-            </div>
-            <div class="delete-modal-body">
-                <div class="delete-title" id="deleteTitle">Hapus Warung Warles</div>
+    <div class="delete-modal-overlay" id="deleteModal">
+        <div class="delete-modal-box">
+            <div class="modal-header">Hapus Transaksi</div>
+            <div class="modal-body">
+                <div id="deleteTitle" style="font-weight: 600; margin-bottom: 8px; color: #0f172a;"></div>
                 <div class="delete-message">Apakah Anda yakin ingin menghapus transaksi ini?</div>
-                <form method="POST" id="deleteForm">
-                    @csrf
-                    @method('DELETE')
-                    <div class="delete-actions">
-                        <button type="button" class="btn-cancel" onclick="closeDeleteModal()">Tidak</button>
-                        <button type="submit" class="btn-delete">Ya</button>
-                    </div>
-                </form>
             </div>
+            <form method="POST" id="deleteForm">
+                @csrf
+                @method('DELETE')
+                <div class="modal-footer">
+                    <button type="submit" class="btn-delete-confirm">Ya, Hapus</button>
+                    <button type="button" class="btn-cancel-delete" onclick="closeDeleteModal()">Tidak</button>
+                </div>
+            </form>
         </div>
     </div>
 

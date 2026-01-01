@@ -1,18 +1,13 @@
-<div class="modal" id="modalDelete">
-    <div class="modal-content delete-box">
-        <span class="close-btn" onclick="closeDeleteModal()">&times;</span>
-
-        <p id="deleteMessage" style="text-align:center; font-size:15px; margin-bottom:20px;">
-            Apakah Anda yakin ingin menghapus?
-        </p>
-
+<div id="modalDelete" class="delete-modal-overlay" aria-hidden="true">
+    <div class="delete-modal-box" role="dialog" aria-modal="true">
+        <div class="modal-header">Hapus Tabungan</div>
+        <div class="modal-body" id="deleteMessage">Yakin ingin menghapus tabungan ini?</div>
         <form id="deleteForm" method="POST">
             @csrf
             @method('DELETE')
-
-            <div class="delete-action">
-                <button type="submit" class="btn-yes">Ya</button>
-                <button type="button" class="btn-no" onclick="closeDeleteModal()">Tidak</button>
+            <div class="modal-footer">
+                <button type="submit" class="btn-delete-confirm">Ya, Hapus</button>
+                <button type="button" class="btn-cancel-delete" onclick="closeDeleteModal()">Tidak</button>
             </div>
         </form>
     </div>
