@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Anggaran;
 use App\Http\Controllers\Controller;
 use App\Models\FastRecord;
 use App\Models\Tabungan;
@@ -20,6 +21,22 @@ class DashboardController extends Controller
         $categories = Category::where('user_id', $userId)->get();
         // default bulan = bulan sekarang (YYYY-MM)
         $nowYm = Carbon::now()->format('Y-m');
+
+        $bulanSekarang = now()->format('Y-m');
+        $bulanLalu     = now()->subMonth()->format('Y-m');
+
+        // Anggaran bulan ini
+        $anggaranBulanIni = Anggaran::where('user_id', $userId)
+            ->where('bulan', $bulanSekarang)
+            ->first();
+
+        // Anggaran bulan lalu (untuk auto copy)
+        $anggaranBulanLalu = Anggaran::where('user_id', $userId)
+            ->where('bulan', $bulanLalu)
+            ->first();
+
+        $showAnggaranModal = !$anggaranBulanIni;
+
 
         // 1) baca 3 bulan berbeda dari query
         $saldoMonthValue   = $request->query('saldo_month', $nowYm);
@@ -179,7 +196,9 @@ class DashboardController extends Controller
             'availableMonths',
             'lastExpenseTemplates',
             'lastIncomeTemplates',
-            'categories'
+            'categories',
+            'showAnggaranModal',
+            'anggaranBulanLalu'
         ));
     }
 }

@@ -57,6 +57,8 @@ Route::middleware(['auth'])->group(function () {
     // Route::resource('anggaran', AnggaranController::class); // Hapus ini
     Route::get('/anggaran', [AnggaranController::class, 'index'])->name('anggaran.index');
     Route::post('/anggaran', [AnggaranController::class, 'storeOrUpdate'])->name('anggaran.storeOrUpdate');
+    Route::get('/anggaran/copy-last', [AnggaranController::class, 'copyLastMonth'])->name('anggaran.copyLastMonth');
+
     // =====================
     //      CATEGORY
     // =====================

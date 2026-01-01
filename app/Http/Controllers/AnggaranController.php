@@ -28,28 +28,66 @@ class AnggaranController extends Controller
     // Ganti fungsi store menjadi storeOrUpdate untuk menangani penyimpanan dan pembaruan
     public function storeOrUpdate(Request $request)
     {
-        $user_id = Auth::id();
+        $userId = Auth::id();
+        $bulan  = now()->format('Y-m'); // contoh: 2025-12
 
-        // Validasi input
         $request->validate([
             'kebutuhan_pokok' => 'required|numeric|min:0',
-            'keinginan' => 'required|numeric|min:0',
-            'tabungan' => 'required|numeric|min:0',
+            'keinginan'       => 'required|numeric|min:0',
+            'tabungan'        => 'required|numeric|min:0',
         ]);
 
-        // Cari Anggaran berdasarkan user_id. Jika tidak ada, buat baru.
-        // Konsep UPSERT (Update or Insert)
         Anggaran::updateOrCreate(
-            ['user_id' => $user_id],
+            [
+                'user_id' => $userId,
+                'bulan'   => $bulan, // 🔑 KUNCI UTAMA
+            ],
             [
                 'kebutuhan_pokok' => $request->kebutuhan_pokok,
-                'keinginan' => $request->keinginan,
-                'tabungan' => $request->tabungan,
+                'keinginan'       => $request->keinginan,
+                'tabungan'        => $request->tabungan,
             ]
         );
 
-        return redirect()->route('ringkasan.bulanan')->with('success', 'Anggaran berhasil disimpan atau diperbarui!');
+        return redirect()
+            ->route('ringkasan.bulanan')
+            ->with('success', 'Anggaran bulan ' . now()->translatedFormat('F Y') . ' berhasil disimpan');
     }
+
+    public function copyLastMonth()
+    {
+        $userId = Auth::id();
+
+        // Ambil anggaran bulan lalu
+        $lastMonth = now()->subMonth()->format('Y-m');
+
+        $last = Anggaran::where('user_id', $userId)
+            ->where('bulan', $lastMonth)
+            ->first();
+
+        // Kalau bulan lalu BELUM ADA → balik tanpa error
+        if (!$last) {
+            return redirect()->route('dashboard')
+                ->with('error', 'Anggaran bulan lalu belum tersedia.');
+        }
+
+        // Copy ke bulan ini
+        Anggaran::updateOrCreate(
+            [
+                'user_id' => $userId,
+                'bulan'   => now()->format('Y-m'),
+            ],
+            [
+                'kebutuhan_pokok' => $last->kebutuhan_pokok,
+                'keinginan'       => $last->keinginan,
+                'tabungan'        => $last->tabungan,
+            ]
+        );
+
+        return redirect()->route('dashboard')
+            ->with('success', 'Anggaran bulan ini berhasil dibuat dari bulan lalu.');
+    }
+
 
     // Hapus fungsi create() karena tidak digunakan lagi
     // Hapus fungsi store() yang lama

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,9 +42,48 @@
                     <a href="/register">Klik disini</a>
                 </p>
             </form>
+            @if (session('success') || session('error'))
+            <div class="alert-overlay show" id="alertModal">
+                <div class="alert-modal {{ session('success') ? 'success' : 'error' }}">
+                    <div class="alert-icon">
+                        @if(session('success'))
+                            ✓
+                        @else
+                            !
+                        @endif
+                    </div>
+
+                    <h3 class="alert-title">
+                        {{ session('success') ? 'Berhasil' : 'Gagal' }}
+                    </h3>
+
+                    <p class="alert-message">
+                        {{ session('success') ?? session('error') }}
+                    </p>
+
+                    <button class="alert-btn" onclick="closeAlert()">OK</button>
+                </div>
+            </div>
+            @endif
+
+
         </div>
 
     </div>
+    <script>
+    function closeAlert() {
+        const modal = document.getElementById('alertModal');
+        if (modal) {
+            modal.classList.remove('show');
+            setTimeout(() => modal.remove(), 300);
+        }
+    }
+
+    // Auto close (opsional)
+    setTimeout(() => {
+        closeAlert();
+    }, 3500);
+    </script>
 
 </body>
 
