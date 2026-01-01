@@ -160,7 +160,7 @@
 <div id="category-grid" class="category-grid" aria-live="polite">
     @foreach ($categories as $category)
         @php
-            $progress = max(0, min(100, $category->progress ?? 0));
+            $progress = max(0, min(100, $category->progress));
         @endphp
         <div class="category-card" data-id="{{ $category->id }}">
             <div class="category-left">

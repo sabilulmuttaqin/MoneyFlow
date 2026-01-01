@@ -348,7 +348,7 @@
                 <div class="month-list" id="monthList">
                     @foreach ($availableMonths as $month)
                         <a href="{{ url()->current() }}?bulan={{ $month['value'] }}"
-                           class="month-item {{ request('bulan', now()->format('Y-m')) == $month['value'] ? 'active' : '' }}">
+                            class="month-item {{ request('bulan', now()->format('Y-m')) == $month['value'] ? 'active' : '' }}">
                             {{ $month['label'] }}
                         </a>
                     @endforeach
@@ -364,20 +364,49 @@
                 </div>
 
                 <div class="summary-box">
+
                     <div class="summary-row">
-                        <span class="label">Pengeluaran</span>
-                        <span class="value">Rp {{ $dataRingkasan['pengeluaran_riil'] }}</span>
+                        <b>Kebutuhan</b><br>
+                        Anggaran : Rp {{ number_format($dataRingkasan['anggaran_kebutuhan'], 0, ',', '.') }}<br>
+                        Terpakai : Rp {{ number_format($dataRingkasan['terpakai_kebutuhan'], 0, ',', '.') }}
                     </div>
-                    <div class="summary-row">
-                        <span class="label">Tabungan</span>
-                        <span class="value">Rp {{ $dataRingkasan['tabungan_riil'] }}</span>
-                    </div>
+
                     <hr>
+
                     <div class="summary-row">
-                        <span class="label">Sisa Saldo</span>
-                        <span class="value">Rp {{ $dataRingkasan['sisa_saldo'] }}</span>
+                        <b>Keinginan</b><br>
+                        Anggaran : Rp {{ number_format($dataRingkasan['anggaran_keinginan'], 0, ',', '.') }}<br>
+                        Terpakai : Rp {{ number_format($dataRingkasan['terpakai_keinginan'], 0, ',', '.') }}
                     </div>
+
+                    <hr>
+
+                    <div class="summary-row">
+                        <b>Tabungan</b><br>
+                        Anggaran : Rp {{ number_format($dataRingkasan['anggaran_tabungan'], 0, ',', '.') }}<br>
+                        Terpakai : Rp {{ number_format($dataRingkasan['terpakai_tabungan'], 0, ',', '.') }}
+                    </div>
+
+                    <hr>
+
+                    <div class="summary-row">
+                        <span>Pemasukan</span>
+                        <span>Rp {{ number_format($dataRingkasan['total_pemasukan'], 0, ',', '.') }}</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Pengeluaran</span>
+                        <span>Rp {{ number_format($dataRingkasan['total_pengeluaran'], 0, ',', '.') }}</span>
+                    </div>
+
+                    <div class="summary-row total">
+                        <span>Sisa Saldo</span>
+                        <span>Rp {{ number_format($dataRingkasan['sisa_saldo'], 0, ',', '.') }}</span>
+                    </div>
+
                 </div>
+
+
             </div>
 
             {{-- Kanan --}}
