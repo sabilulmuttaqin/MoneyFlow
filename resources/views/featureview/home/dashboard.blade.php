@@ -226,6 +226,34 @@
         </div>
     </div>
 
+    @if ($showAnggaranModal)
+    <div class="anggaran-overlay" id="anggaranModal">
+        <div class="anggaran-modal">
+            <h2>Atur Anggaran Bulan {{ now()->translatedFormat('F Y') }}</h2>
+            <p class="desc">
+                Anggaran dibuat <b>setiap bulan</b> agar keuanganmu lebih terkontrol.
+            </p>
+
+            @if ($anggaranBulanLalu)
+                <a href="{{ route('anggaran.copyLastMonth') }}"
+                class="btn-primary">
+                    🔄 Gunakan Data Anggaran Bulan Lalu
+                </a>
+            @endif
+
+            <a href="{{ route('anggaran.index') }}"
+            class="btn-secondary">
+                ➕ Buat Anggaran Baru
+            </a>
+
+            <button class="btn-skip" onclick="closeAnggaranModal()">
+                Lewati untuk sekarang
+            </button>
+        </div>
+    </div>
+    @endif
+
+
     {{-- MODAL CATAT CEPAT --}}
     <div class="modal-overlay" id="quickModal">
         <div class="modal">
@@ -414,6 +442,10 @@
                 }
             }, 5500);
         });
+
+        function closeAnggaranModal() {
+    document.getElementById('anggaranModal')?.remove();
+    }
     </script>
 
 @endsection

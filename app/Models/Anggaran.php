@@ -10,7 +10,8 @@ class Anggaran extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', // <-- WAJIB DITAMBAHKAN
+        'user_id', 
+        'bulan',
         'kebutuhan_pokok',
         'keinginan',
         'tabungan',
