@@ -27,10 +27,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    // Metode untuk menangani password yang terenkripsi
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value); // Mengenkripsi password
-    }
 }
