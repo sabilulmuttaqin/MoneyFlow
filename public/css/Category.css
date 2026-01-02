@@ -289,10 +289,15 @@
     background: #5b8def;
     border: none;
     color: #ffffff;
-    padding: 6px 10px;
+    width: 32px;
+    height: 32px;
+    padding: 0;
     border-radius: 6px;
-    font-size: 13px;
+    font-size: 14px;
     transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .category-right .btn-primary:hover {
@@ -307,7 +312,9 @@
     color: #dc2626;
     cursor: pointer;
     font-size: 14px;
-    padding: 6px 10px;
+    width: 32px;
+    height: 32px;
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;

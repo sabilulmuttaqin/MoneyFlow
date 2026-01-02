@@ -110,7 +110,7 @@
                             <tr>
                                 <td>
                                     <div class="activity-name">{{ $transaction->name }}</div>
-                                    <div class="activity-category">{{ $transaction->category_id }}</div>
+                                    <div class="activity-category">{{ $transaction->category->name ?? '-' }}</div>
                                 </td>
                                 <td>
                                     <span class="status-badge {{ $transaction->type }}">
