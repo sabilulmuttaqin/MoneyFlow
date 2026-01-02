@@ -140,3 +140,172 @@
     font-weight: 500;
     color: #333;
 }
+
+/* Profile Dropdown */
+.profile-dropdown {
+    position: relative;
+}
+
+.profile-card {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    padding: 10px 18px;
+    border-radius: 16px;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.profile-card:hover {
+    background: #f8fafc;
+    border-color: #e2e8f0;
+}
+
+.profile-card.active {
+    background: #f1f5f9;
+    border-color: #e2e8f0;
+}
+
+.dropdown-arrow {
+    color: #94a3b8;
+    transition: transform 0.2s ease;
+}
+
+.profile-card.active .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+/* Profile Menu */
+.profile-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    min-width: 200px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+    border: 1px solid #f1f5f9;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+    z-index: 1001;
+    overflow: hidden;
+}
+
+.profile-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.profile-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    text-decoration: none;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.profile-menu-item:hover {
+    background: linear-gradient(135deg, #5b8def 0%, #4c7ce5 100%);
+    color: #ffffff;
+}
+
+.profile-menu-item svg {
+    flex-shrink: 0;
+}
+
+/* RESPONSIVE - Tablet */
+@media (max-width: 1024px) {
+    .navbar {
+        left: 0;
+        padding-left: 70px;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+    
+    .navbar-top {
+        left: 0;
+        width: 100%;
+        padding-left: 70px;
+    }
+}
+
+/* RESPONSIVE - Mobile */
+@media (max-width: 768px) {
+    .navbar {
+        height: 60px;
+        padding: 0 16px;
+        padding-left: 60px;
+    }
+    
+    .navbar-left h3 {
+        font-size: 14px;
+    }
+    
+    .main-content {
+        padding-top: 80px;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    
+    .profile-card {
+        padding: 8px 12px;
+        gap: 8px;
+    }
+    
+    .profile-img {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .user-info {
+        display: none;
+    }
+    
+    .dropdown-arrow {
+        display: none;
+    }
+    
+    .profile-menu {
+        right: 0;
+        left: auto;
+        min-width: 180px;
+    }
+}
+
+/* RESPONSIVE - Small Mobile */
+@media (max-width: 480px) {
+    .navbar {
+        padding-left: 50px;
+    }
+    
+    .navbar-left h3 {
+        font-size: 13px;
+        max-width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .profile-card {
+        padding: 6px 10px;
+    }
+    
+    .profile-img {
+        width: 28px;
+        height: 28px;
+    }
+}

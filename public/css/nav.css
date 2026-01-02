@@ -42,6 +42,7 @@ body {
     bottom: 0;
     box-shadow: 2px 0 8px rgba(0, 0, 0, 0.03);
     z-index: 1000;
+    transition: transform 0.3s ease;
 }
 
 /* LOGO SECTION */
@@ -50,12 +51,38 @@ body {
     border-bottom: 1px solid #f0f1f3;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .logo-img {
     height: 36px;
     width: auto;
     object-fit: contain;
+}
+
+/* Close button inside sidebar (mobile only) */
+.sidebar-close-btn {
+    display: none;
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    color: #64748b;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.sidebar-close-btn:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+@media (max-width: 1024px) {
+    .sidebar-close-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 /* MENU LABEL */
@@ -146,21 +173,121 @@ body {
     font-family: "Aspekta", sans-serif;
 }
 
-/* RESPONSIVE */
+/* HAMBURGER BUTTON */
+.hamburger-btn {
+    display: none;
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 1002;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s ease;
+}
+
+.hamburger-btn:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+.hamburger-btn svg {
+    display: block;
+    color: #475569;
+}
+
+/* SIDEBAR OVERLAY */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.show {
+    display: block;
+    opacity: 1;
+}
+
+/* RESPONSIVE - Tablet */
 @media (max-width: 1024px) {
+    .hamburger-btn {
+        display: block;
+    }
+    
     .sidebar {
         transform: translateX(-100%);
-        width: 260px;
+        width: 280px;
+        min-width: 280px;
+    }
+    
+    .sidebar.open {
+        transform: translateX(0);
     }
 
     .content {
         width: 100%;
         margin-left: 0;
     }
+    
+    .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+    
+    .navbar {
+        left: 0 !important;
+        padding-left: 70px !important;
+    }
 }
 
+/* RESPONSIVE - Mobile */
 @media (max-width: 768px) {
     .content {
         padding: 24px 20px;
+    }
+    
+    .hamburger-btn {
+        top: 12px;
+        left: 12px;
+        padding: 8px;
+    }
+    
+    .main-content {
+        padding-top: 80px !important;
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+    }
+    
+    .navbar {
+        padding: 0 16px !important;
+        padding-left: 60px !important;
+        height: 60px !important;
+    }
+    
+    .sidebar {
+        width: 85vw;
+        max-width: 300px;
+    }
+}
+
+/* RESPONSIVE - Small Mobile */
+@media (max-width: 480px) {
+    .main-content {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+    
+    .hamburger-btn {
+        top: 10px;
+        left: 10px;
     }
 }

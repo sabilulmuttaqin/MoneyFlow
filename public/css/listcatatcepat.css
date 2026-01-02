@@ -572,32 +572,127 @@ body {
 /* RESPONSIVE */
 @media (max-width: 1200px) {
     .summary-grid {
-        grid-template-columns: minmax(0, 1fr);
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     }
 }
 
 @media (max-width: 992px) {
-    .page-wrapper {
-        padding: 20px 24px;
+    .summary-grid {
+        grid-template-columns: minmax(0, 1fr);
     }
 }
 
 @media (max-width: 768px) {
-    .page-wrapper {
-        padding: 16px;
-    }
-
     .table-container {
         overflow-x: auto;
     }
 
     .transactions-table {
-        min-width: 600px;
+        min-width: 500px;
+    }
+    
+    .transactions-table th,
+    .transactions-table td {
+        padding: 12px 16px;
+    }
+    
+    .table-header {
+        padding: 16px;
+    }
+    
+    .table-title {
+        font-size: 16px;
     }
 
     .modal {
-        width: 100%;
+        width: calc(100% - 32px);
         margin: 16px;
+        padding: 20px;
+        border-radius: 20px;
+    }
+    
+    .modal-title {
+        font-size: 18px;
+    }
+    
+    .page-title {
+        font-size: 16px;
+    }
+    
+    .page-subtitle {
+        font-size: 13px;
+    }
+    
+    .card-value {
+        font-size: 20px;
+    }
+    
+    .card-value-saldo {
+        font-size: 24px;
+    }
+    
+    .delete-modal-box {
+        width: calc(100% - 32px);
         padding: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .card-value {
+        font-size: 18px;
+    }
+    
+    .card-value-saldo {
+        font-size: 22px;
+    }
+    
+    .card-title {
+        font-size: 12px;
+    }
+    
+    .transactions-table th {
+        font-size: 11px;
+        padding: 10px 12px;
+    }
+    
+    .transactions-table td {
+        padding: 12px;
+        font-size: 13px;
+    }
+    
+    .activity-name {
+        font-size: 13px;
+    }
+    
+    .activity-category {
+        font-size: 11px;
+    }
+    
+    .amount-cell {
+        font-size: 13px;
+    }
+    
+    .date-cell {
+        font-size: 12px;
+    }
+    
+    .btn-edit,
+    .btn-delete-icon {
+        padding: 5px 8px;
+        font-size: 12px;
+    }
+    
+    .modal {
+        padding: 18px;
+    }
+    
+    .form-input {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+    
+    .btn-submit {
+        padding: 10px 16px;
+        font-size: 14px;
     }
 }

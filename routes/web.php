@@ -9,6 +9,7 @@ use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CatatCepatController;
 use App\Http\Controllers\RingkasanController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,4 +95,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/catat-cepat', [CatatCepatController::class, 'index'])->name('catat-cepat.index');
     Route::put('/catat-cepat/{id}', [CatatCepatController::class, 'update'])->name('catat-cepat.update');
     Route::delete('/catat-cepat/{id}', [CatatCepatController::class, 'destroy'])->name('catat-cepat.destroy');
+
+    // =====================
+    //      PROFILE
+    // =====================
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
 });

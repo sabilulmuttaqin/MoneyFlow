@@ -12,12 +12,32 @@
 
 <body>
     @include('layouts.partials.navbar')
+    
+    {{-- Hamburger Toggle Button (only shows when sidebar is closed) --}}
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
+        <svg class="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
+    
+    {{-- Overlay for mobile --}}
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <div class="layout">
 
-        <aside class="sidebar">
-            {{-- Logo Section - LOGO UTUH (GAMBAR + TEXT) --}}
+        <aside class="sidebar" id="sidebar">
+            {{-- Logo Section with Close Button --}}
             <div class="logo-section">
                 <img src="{{ asset('images/logo.png') }}" alt="MoneyFlow" class="logo-img">
+                {{-- Close button inside sidebar --}}
+                <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close menu">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
             </div>
 
             <div class="menu-label">Menu</div>
@@ -102,6 +122,40 @@
     </div>
 
     @yield('scripts')
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        
+        function openSidebar() {
+            sidebar.classList.add('open');
+            overlay.classList.add('show');
+            hamburgerBtn.style.display = 'none';
+        }
+        
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('show');
+            hamburgerBtn.style.display = 'block';
+        }
+        
+        hamburgerBtn.addEventListener('click', openSidebar);
+        sidebarCloseBtn.addEventListener('click', closeSidebar);
+        overlay.addEventListener('click', closeSidebar);
+        
+        // Close sidebar when clicking on nav item (mobile)
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                if (window.innerWidth <= 1024) {
+                    closeSidebar();
+                }
+            });
+        });
+    });
+    </script>
 </body>
 
 </html>
