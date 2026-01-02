@@ -142,9 +142,88 @@ body {
         justify-content: center;
         align-items: center;
         padding: 30px;
+        background: linear-gradient(180deg, #d0e3ff 0%, #e8f1ff 40%, #ffffff 100%);
+        min-height: 100vh;
+        position: relative;
     }
+    
+    /* Mobile logo - bigger */
+    .auth-right::before {
+        content: '';
+        position: absolute;
+        top: 28px;
+        left: 24px;
+        width: 180px;
+        height: 54px;
+        background-image: url('/images/logo.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+    
     .auth-right form {
-        width: 90%;
+        width: 100%;
+        max-width: 360px;
+        margin-top: 60px;
+        background: #ffffff;
+        padding: 28px 24px;
+        border-radius: 20px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    }
+    
+    .auth-right h2 {
+        font-size: 28px;
+        margin-bottom: 16px;
+    }
+    
+    .input-group input {
+        padding: 14px 18px;
+        font-size: 14px;
+    }
+    
+    .btn-primary {
+        padding: 14px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-right {
+        padding: 20px;
+    }
+    
+    .auth-right::before {
+        top: 20px;
+        left: 20px;
+        width: 100px;
+        height: 32px;
+    }
+    
+    .auth-right form {
+        width: 100%;
+        margin-top: 50px;
+    }
+    
+    .auth-right h2 {
+        font-size: 24px;
+    }
+    
+    .input-group {
+        margin-bottom: 16px;
+    }
+    
+    .input-group input {
+        padding: 12px 16px;
+        font-size: 14px;
+    }
+    
+    .btn-primary {
+        padding: 12px;
+        font-size: 15px;
+        margin-top: 10px;
+    }
+    
+    .footer-text {
+        font-size: 13px;
     }
 }
 

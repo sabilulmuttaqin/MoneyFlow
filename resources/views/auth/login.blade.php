@@ -21,9 +21,8 @@
 
         <!-- Right Side -->
         <div class="auth-right">
-            <h2>Login</h2>
-
             <form action="{{ route('login') }}" method="POST">
+                <h2>Login</h2>
                 @csrf
 
                 <div class="input-group">

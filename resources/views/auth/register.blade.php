@@ -21,9 +21,8 @@
 
         <!-- Right Side -->
         <div class="auth-right">
-            <h2>Register</h2>
-
             <form action="{{ route('register') }}" method="POST">
+                <h2>Register</h2>
                 @csrf
 
                 <div class="input-group">
