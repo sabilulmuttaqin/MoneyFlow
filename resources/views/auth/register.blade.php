@@ -51,7 +51,7 @@
                     <a href="/login">Klik disini</a>
                 </p>
             </form>
-            @if (session('success') || session('error'))
+            @if (session('success') || session('error') || $errors->any())
             <div class="alert-overlay show" id="alertModal">
                 <div class="alert-modal {{ session('success') ? 'success' : 'error' }}">
                     <div class="alert-icon">
@@ -67,7 +67,19 @@
                     </h3>
 
                     <p class="alert-message">
-                        {{ session('success') ?? session('error') }}
+                        @if(session('success'))
+                            {{ session('success') }}
+                        @elseif(session('error'))
+                            {{ session('error') }}
+                        @elseif($errors->any())
+                            @if($errors->has('email'))
+                                Email sudah terdaftar, silakan gunakan email lain.
+                            @elseif($errors->has('password'))
+                                Password dan konfirmasi password tidak cocok.
+                            @else
+                                {{ $errors->first() }}
+                            @endif
+                        @endif
                     </p>
 
                     <button class="alert-btn" onclick="closeAlert()">OK</button>

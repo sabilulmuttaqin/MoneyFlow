@@ -60,6 +60,7 @@ class AuthController extends Controller
         }
 
         Auth::login($user);
+        session(['just_logged_in' => true]);
 
         return redirect()->route('dashboard')
             ->with('success', 'Berhasil login');

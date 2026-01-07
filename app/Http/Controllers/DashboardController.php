@@ -35,7 +35,8 @@ class DashboardController extends Controller
             ->where('bulan', $bulanLalu)
             ->first();
 
-        $showAnggaranModal = !$anggaranBulanIni;
+        // Modal hanya muncul setelah login dan belum ada anggaran bulan ini
+        $showAnggaranModal = !$anggaranBulanIni && session()->pull('just_logged_in', false);
 
 
         // 1) baca 3 bulan berbeda dari query
